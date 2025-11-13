@@ -1,36 +1,33 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 function LoginForm()
 {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<any>(null);
 
-    const handleSubmit = async(event) => {
+    const handleSubmit = async(event: { preventDefault: () => void; }) => {
     event.preventDefault();
-        try
-        {
-            const response = await axios.post('URL_BACKEND/api/login', {
-                email,
+        try {
+            const response = await axios.post('URL_BACKEND/api/login', 
+      {
+        email,
         password,
       });
             console.log(response.data);
-            // Redirigir al usuario a la página principal después del login exitoso
+        // Redirigir al usuario a la página principal después del login exitoso
         }
-        catch (error)
+        catch (error: any) 
         {
-            setError(error.response.data.message);
+          setError(error);
         }
-    }
-    ;
+    };
 
     return (
   
       < form onSubmit ={ handleSubmit}>
-  
         < h2 > Login </ h2 >
-  
         < label >
           Email:
         < input
