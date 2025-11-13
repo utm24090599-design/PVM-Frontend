@@ -18,7 +18,7 @@ export default function Form() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-        //alch no supe que pedo aqui con lo del axios pero se supone que aqui va el backend xd
+       
       const response = await axios.post(
         "Backend", 
         formData
