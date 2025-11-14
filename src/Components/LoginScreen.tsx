@@ -5,7 +5,7 @@ function LoginForm()
 {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState<any>(null);
+    const [error, setError] = useState<Error| string | null>(null);
 
     const handleSubmit = async(event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -18,10 +18,13 @@ function LoginForm()
             console.log(response.data);
         // Redirigir al usuario a la página principal después del login exitoso
         }
-        catch (error: any) 
-        {
-          setError(error);
-        }
+        catch (error) {
+  if (error instanceof Error) {
+    setError(error); // Error object
+  } else {
+    setError("Unknown error"); // fallback string
+  }
+}
     };
 
     return (
@@ -47,7 +50,7 @@ onChange ={ (event) => setPassword(event.target.value)}
       </ label >
       < br />
       < button type = "submit" > Iniciar sesión </ button >
-      { error && < p style ={ { color: 'red' } }>{ error}</ p >}
+      { error && < p style ={ { color: 'red' } }>{ error instanceof Error ? error.message : error}</ p >}
     </ form >
   );
 }
