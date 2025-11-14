@@ -15,6 +15,7 @@ export type EmailInputProps = {
 
 const emailRegex = /^(?:[a-zA-Z0-9_'^&\/+-])+(?:\.(?:[a-zA-Z0-9_'^&\/+-])+)*@(?:(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}|\[(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\])$/;
 
+
 export const EmailInput: React.FC<EmailInputProps> = ({
   label = 'Email',
   name = 'email',
