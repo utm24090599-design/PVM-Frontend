@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./form.css";
+import NameInput from "../Components/inputs/NameInput";
+import EmailInput from "../Components/inputs/EmailInput";
+import PasswordInput from "../Components/inputs/PasswordInput";
 
 export default function Form() {
   const [formData, setFormData] = useState({
@@ -8,12 +11,15 @@ export default function Form() {
     usuario: "",
     password: "",
   });
-
+  const [validpassword, setvalidpassword] = useState (false);
+  const [validemail, setvalidemail] = useState (false);
+  const [validNombre, setvalidNombre] = useState (false);
   const [mensaje, setMensaje] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,27 +41,51 @@ export default function Form() {
     <div className="form-container">
       <form onSubmit={handleSubmit} className="form-card">
         <h2>Registro</h2>
-        <input
-          type="text"
+         <NameInput
+         //validacion de nombre integrada
           name="nombre"
           placeholder="Nombre"
           value={formData.nombre}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
+          onChange={(value, valid) => {
+            setFormData((prev) => ({...prev, nombre: value}));
+            setvalidNombre(valid);
+          }}
+          onBlur={(value, valid)=>{
+            setvalidNombre(valid);
+
+          }}
+         />
+        
+          <EmailInput
+          //validacion de email integrada
           name="usuario"
-          placeholder="Usuario o Email"
+          placeholder="Correo"
           value={formData.usuario}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
+          onChange={(value, valid) => {
+            setFormData((prev) => ({...prev, usuario: value}));
+            setvalidemail(valid);
+          }}
+          onBlur={(value, valid)=>{
+            setvalidemail(valid);
+
+          }}
+         />
+          
+       
+        <PasswordInput
+        //validacion de password integrada
           name="password"
           placeholder="Contraseña"
           value={formData.password}
-          onChange={handleChange}
-        />
+          onChange={(value, valid) => {
+            setFormData((prev) => ({...prev, password: value}));
+            setvalidpassword(valid);
+          }}
+          onBlur={(value, valid)=>{
+            setvalidpassword(valid);
+
+          }}
+         />
         <button type="submit">Registrarse</button>
         {mensaje && <p>{mensaje}</p>}
       </form>
