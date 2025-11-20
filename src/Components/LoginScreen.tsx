@@ -45,7 +45,7 @@ function LoginForm() {
         />
       </label>
       <br />
-      <button type="submit"> Iniciar sesión </button>
+      <button type="submit" onMouseMoveCapture={() => alert("hola" )}> Iniciar sesión </button>
       {error && (
         <p style={{ color: "red" }}>
           {error instanceof Error ? error.message : error}

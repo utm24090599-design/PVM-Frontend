@@ -1,11 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import Login from '../pages/TestLogin';
-import LoginForm from '../components/LoginScreen';
+import LoginForm from '../Components/LoginScreen';
 import Dashboard from '../pages/TestDashboard';
 // import NotFound from '../pages/NotFound';
 import ProtectedRoute from '../auth/ProtectedRoute';
 import Form from '../form/form';
-import TestConnection from '../components/Testconection';
+import TestConnection from '../Components/Testconection';
+import DemoFeedback from '../Components/DemoFeedback';
 
 export default function AppRouter() {
   return (
@@ -24,6 +25,7 @@ export default function AppRouter() {
       {/* Test Routes for devs */}
       <Route path="/TestConn" element={<TestConnection />} />
       <Route path="/TestLogin" element={<Login />} />
+      <Route path="/DemoFeedback" element={<DemoFeedback />} />
     </Routes>
   );
 }

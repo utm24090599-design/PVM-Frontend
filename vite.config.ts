@@ -1,6 +1,5 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import tailwindcss from '@tailwindcss/vite'
-import { dir } from 'console'
 import { resolve } from 'path'
 
 export default defineConfig({
@@ -15,4 +14,9 @@ export default defineConfig({
       "@": resolve(__dirname, "./src"),
     },
   },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.ts'
+  }
 });
