@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 // import Login from '../pages/TestLogin';
-import LoginForm from '../components/LoginScreen';
+import LoginForm from '../Components/LoginScreen';
 import Dashboard from '../pages/TestDashboard';
 // import NotFound from '../pages/NotFound';
 import ProtectedRoute from '../auth/ProtectedRoute';
