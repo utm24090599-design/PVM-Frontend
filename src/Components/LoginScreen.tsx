@@ -1,5 +1,7 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState } from 'react';
+import axios from 'axios';
+import EmailInput from './inputs/EmailInput';
+import PasswordInput from './inputs/PasswordInput';
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -24,34 +26,26 @@ function LoginForm() {
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2> Login </h2>
-      <label>
-        Email:
-        <input
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Contraseña:
-        <input
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-      </label>
-      <br />
-      <button type="submit" onMouseMoveCapture={() => alert("hola" )}> Iniciar sesión </button>
-      {error && (
-        <p style={{ color: "red" }}>
-          {error instanceof Error ? error.message : error}
-        </p>
-      )}
-    </form>
+return (
+< form onSubmit ={handleSubmit}>
+< h2 > Login </ h2 >
+<EmailInput
+label = "Email"
+name = "email"
+value ={email}
+onChange ={ (value, valid) => setEmail(value)}
+/>
+< br />
+<PasswordInput
+label = "Contraseña"
+name = "password"
+value ={password}
+onChange ={(value, valid) => setPassword(value)}
+/>
+< br />
+< button type = "submit" > Iniciar sesión </ button >
+{ error && < p style ={ { color: 'red' } }>{ error instanceof Error ? error.message : error}</ p >}
+</ form >
   );
 }
 
