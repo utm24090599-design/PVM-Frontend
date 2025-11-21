@@ -12,7 +12,7 @@ body {
 }
 
 .form-card {
-  background: white;
+  background: rgb(204, 228, 255);
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

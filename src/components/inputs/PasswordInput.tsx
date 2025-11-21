@@ -72,7 +72,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
         <button
           type="button"
           onClick={() => setShow((s) => !s)}
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-blue-600"
+          className="absolute right9 top-1/2 -translate-y-1/2 text-xs text-blue-600"
         >
           {show ? 'Ocultar' : 'Mostrar'}
         </button>
