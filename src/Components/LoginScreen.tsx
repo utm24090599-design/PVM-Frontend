@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import EmailInput from './inputs/EmailInput';
 import NameInput from './inputs/NameInput';
+import PasswordInput from './inputs/PasswordInput';
 
 function LoginForm()
 {
@@ -36,7 +37,7 @@ function LoginForm()
 onChange ={ (value) => setEmail(value)}
         />
       < br />
-      <NameInput
+      <PasswordInput
           label = "Contraseña"
           name = "password"
           value ={password}
