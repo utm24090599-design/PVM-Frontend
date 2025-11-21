@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AddToCartButton from "../AddToCartButton";
 
 interface CardBaseProps {
   image?: string;
@@ -47,7 +48,7 @@ const CardBase: React.FC<CardBaseProps> = ({
           right: "10px",
           width: "46px",
           height: "46px",
-          background: "#b4efbc",
+
           borderRadius: "50%",
           display: "flex",
           justifyContent: "center",
@@ -57,7 +58,9 @@ const CardBase: React.FC<CardBaseProps> = ({
           zIndex: 2
         }}
       >
-        🛒
+        <AddToCartButton onAdd={function (): void {
+        throw new Error("Function not implemented.");
+      } } />
       </div>
 
       {/* Imagen */}

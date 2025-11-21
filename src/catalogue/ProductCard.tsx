@@ -1,10 +1,10 @@
 // src/catalogue/ProductCard.tsx
-
-import React, { useState } from "react";
+import { useState } from "react";
 // ➡️ IMPORTACIONES AJUSTADAS
-import type { ProductData } from "../utils/mockData"; 
-import StockBadge from "../Components/feedback/StockBadge"; 
-import QuickActionMenu from "../Components/inputs/QuickActionMenu"; 
+import type { ProductData } from "../utils/mockData";
+import StockBadge from "../Components/feedback/StockBadge";
+import QuickActionMenu from "../Components/inputs/QuickActionMenu";
+import AddToCartButton from "../Components/AddToCartButton";
 
 // ➡️ Definimos las props que debe recibir la tarjeta
 interface ProductCardProps {
@@ -13,17 +13,17 @@ interface ProductCardProps {
 }
 
 // ➡️ REEMPLAZA TU FUNCIÓN card() por esta
-export default function ProductCard({ data, onClick }: ProductCardProps){
+export default function ProductCard({ data, onClick }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   // Lógica principal de disponibilidad
   const isAvailable = data.count > 0;
-  
+
   // 1. Estilos Condicionales (Opacidad)
   const cardOpacity = isAvailable ? "opacity-100" : "opacity-50";
   // 2. Click Condicional (Desactivación de click)
   const clickability = isAvailable ? "cursor-pointer" : "cursor-default";
-  
+
   // Handler para la desactivación del clic
   const handleCardClick = () => {
     if (isAvailable) {
@@ -31,8 +31,23 @@ export default function ProductCard({ data, onClick }: ProductCardProps){
     }
   };
 
-  const handleMouseEnter = () => { setIsHovered(true); };
-  const handleMouseLeave = () => { setIsHovered(false); };
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const showCartButton = () => {
+    const show = isAvailable ? "pointer": "not-allowed";
+    
+    return show;
+  }
+  const isCartButtonClickable = () => {
+     const show = isAvailable ? "visible": "hidden";
+      return show;
+  }
+  
 
   // 3. Renderizado Condicional del Overlay (Hover)
   const renderQuickActionOverlay = () => {
@@ -42,7 +57,7 @@ export default function ProductCard({ data, onClick }: ProductCardProps){
       // CASO DISPONIBLE: Muestra el menú de acción rápida
       return <QuickActionMenu data={data} maxStock={data.count} />; // ⬅️ AÑADIR maxStock
     } else {
-      // CASO AGOTADO: Muestra solo la nota de no disponible 
+      // CASO AGOTADO: Muestra solo la nota de no disponible
       return (
         <div className="absolute inset-0 bg-gray-900/80 text-white flex flex-col justify-center items-center transition-opacity duration-300">
           <p className="text-lg font-bold">Sin Stock</p>
@@ -52,15 +67,37 @@ export default function ProductCard({ data, onClick }: ProductCardProps){
     }
   };
 
-
   // Renderizado principal
   return (
-    <div 
+    <div
       className={`relative w-64 h-80 border rounded-lg shadow-md p-4 transition-all duration-300 ${cardOpacity} ${clickability}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleCardClick}
     >
+      <div
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+          width: "46px",
+          height: "46px",
+          borderRadius: "50%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "24px",
+          cursor: showCartButton(),
+          zIndex: 2,
+          visibility: isCartButtonClickable(),
+        }}
+      >
+        <AddToCartButton
+          onAdd={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+      </div>
       {/* Área de la Imagen y Detalles */}
       <div className="w-full h-3/5 bg-gray-200 flex items-center justify-center rounded mb-2">
         <span className="material-symbols-outlined text-4xl">image</span>
@@ -78,4 +115,4 @@ export default function ProductCard({ data, onClick }: ProductCardProps){
       {renderQuickActionOverlay()}
     </div>
   );
-};
+}
