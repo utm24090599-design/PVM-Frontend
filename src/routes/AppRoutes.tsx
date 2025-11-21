@@ -14,6 +14,7 @@ import StockTestPage from '../pages/StockTestPage';
 import TestConnection from '../Components/Testconection';
 import DemoFeedback from '../Components/DemoFeedback';
 import CardsDemo from '../Components/CardsDemo';
+import Principal from "../pages/PrincipalInterface";
 import OrderSummary from '../Components/OrderSummary';
 export default function AppRouter() {
   return (
@@ -37,8 +38,10 @@ export default function AppRouter() {
       <Route path="/TestConn" element={<TestConnection />} />
       <Route path="/TestLogin" element={<Login />} />
       <Route path="/DemoFeedback" element={<DemoFeedback />} />
+      {/* <Route path="/OrderSummary" element={<Order />} /> */}
       <Route path="/OrderSummary" element={<OrderSummary products={[]} taxRate={0} />} />
       <Route path="/testDashboard" element={<Dashboard />} />
+      <Route path="/Principal" element={<Principal />} />
     </Routes>
   );
 }
