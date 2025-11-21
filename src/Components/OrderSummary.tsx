@@ -1,5 +1,6 @@
 //Este componente se encarga de mostrar: Lista de productos con nombre, cantidad y subtotal. Totales generales (subtotal, impuestos, total final).
 import React from "react";
+import ConfirmOrderButton from "./ConfirmOrderButton";
 
 interface Product {
   id: number;
@@ -32,6 +33,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ products, taxRate }) => {
       <p>Subtotal: ${subtotal.toFixed(2)}</p>
       <p>Impuestos ({(taxRate * 100).toFixed(0)}%): ${taxes.toFixed(2)}</p>
       <h3>Total: ${total.toFixed(2)}</h3>
+      <ConfirmOrderButton />
     </div>
   );
 };
