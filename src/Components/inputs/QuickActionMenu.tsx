@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import type { ProductData } from '../../utils/mockData';
 import { updateProductQuantity, getSelectedProducts } from '../../utils/storage';
+import { useNavigate } from 'react-router-dom';
 
 interface QuickActionMenuProps {
   data: ProductData;
@@ -10,12 +11,15 @@ interface QuickActionMenuProps {
 }
 
 // ⬅️ FUNCIÓN CLAVE: Detiene el evento para que no active la alerta de la tarjeta
-const stopPropagation = (e: React.MouseEvent) => {
-  e.stopPropagation();
-};
 
 const QuickActionMenu: React.FC<QuickActionMenuProps> = ({ data, maxStock }) => {
   const [quantity, setQuantity] = useState(0);
+  const navigate = useNavigate();
+  
+  const stopPropagation = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigate('/Principal')
+  };
 
   // Cargar la cantidad guardada al montar
   useEffect(() => {
