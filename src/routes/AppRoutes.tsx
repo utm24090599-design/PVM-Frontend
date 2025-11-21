@@ -1,4 +1,3 @@
-// src/routes/AppRoutes.tsx
 
 import { Routes, Route } from 'react-router-dom';
 import Login from '../pages/TestLogin';
@@ -10,14 +9,14 @@ import Form from '../form/form';
 import StockTestPage from '../pages/StockTestPage'; 
 import TestConnection from '../Components/Testconection';
 import DemoFeedback from '../Components/DemoFeedback';
-
+import CardsDemo from '../Components/CardsDemo';
 export default function AppRouter() {
   return (
     <Routes>
       
       {/* ➡️ AÑADIR RUTA TEMPORAL PARA TESTING ⬅️ */}
       <Route path="/test-stock" element={<StockTestPage />} />
-      
+      <Route path="/cards-demo" element={<CardsDemo />} />
       {/* Rutas originales de tu proyecto (NO MODIFICADAS) */}
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<Form />} />
@@ -35,6 +34,7 @@ export default function AppRouter() {
       <Route path="/TestLogin" element={<Login />} />
       <Route path="/DemoFeedback" element={<DemoFeedback />} />
       <Route path="/OrderSummary" element={<OrderSummary />} />
+      <Route path="/testDashboard" element={<Dashboard />} />
     </Routes>
   );
 }
