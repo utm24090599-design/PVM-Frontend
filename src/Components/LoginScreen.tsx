@@ -33,14 +33,14 @@ return (
 label = "Email"
 name = "email"
 value ={email}
-onChange ={ (value, valid) => setEmail(value)}
+onChange ={ (value) => setEmail(value)}
 />
 < br />
 <PasswordInput
 label = "Contraseña"
 name = "password"
 value ={password}
-onChange ={(value, valid) => setPassword(value)}
+onChange ={(value) => setPassword(value)}
 />
 < br />
 < button type = "submit" > Iniciar sesión </ button >
