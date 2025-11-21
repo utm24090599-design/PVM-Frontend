@@ -40,7 +40,7 @@ export default function ProductCard({ data, onClick }: ProductCardProps){
 
     if (isAvailable) {
       // CASO DISPONIBLE: Muestra el menú de acción rápida
-      return <QuickActionMenu data={data} />;
+      return <QuickActionMenu data={data} maxStock={data.count} />; // ⬅️ AÑADIR maxStock
     } else {
       // CASO AGOTADO: Muestra solo la nota de no disponible 
       return (
