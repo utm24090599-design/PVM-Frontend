@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
+import EmailInput from './inputs/EmailInput';
+import NameInput from './inputs/NameInput';
 
 function LoginForm()
 {
@@ -25,29 +27,24 @@ function LoginForm()
     };
 
     return (
-  
       < form onSubmit ={ handleSubmit}>
         < h2 > Login </ h2 >
-        < label >
-          Email:
-        < input
-          type = "email"
-          value ={ email}
-onChange ={ (event) => setEmail(event.target.value)}
+        <EmailInput
+         label = "Email"
+          name = "email"
+          value ={email}
+onChange ={ (value) => setEmail(value)}
         />
-      </ label >
       < br />
-      < label >
-        Contraseña:
-        < input
-          type = "password"
-          value ={ password}
-onChange ={ (event) => setPassword(event.target.value)}
+      <NameInput
+          label = "Contraseña"
+          name = "password"
+          value ={password}
+onChange ={ (value) => setPassword(value)}
         />
-      </ label >
       < br />
       < button type = "submit" > Iniciar sesión </ button >
-      { error && < p style ={ { color: 'red' } }>{ error}</ p >}
+      { error && < p style ={ { color: 'blue' } }>{ error}</ p >}
     </ form >
   );
 }
