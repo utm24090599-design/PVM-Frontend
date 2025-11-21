@@ -4,12 +4,13 @@ import { BrowserRouter } from 'react-router-dom'
 import ProductCard from './catalogue/ProductCard.tsx'
 import GridCatalogue from './catalogue/ProductGrid.tsx'
 import { AuthProvider } from './auth/AuthProvider.tsx'
-// deje el gridcatalogue en el main como prueba de mientras
+import App from './App.tsx'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
       <AuthProvider>
         <BrowserRouter>
-          <GridCatalogue/>
+          <App/>
         </BrowserRouter>
       </AuthProvider>
   </StrictMode>,

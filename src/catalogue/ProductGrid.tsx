@@ -21,6 +21,46 @@ export default function GridCatalogue() {
       description: "Sonido de baja calidad.",
       availability: false,
     },
+    {
+      name: "Moto de limon",
+      price: 51,
+      description: "Producto 100% empeñable",
+      availability: true,
+    },
+    {
+      name: "Bodrio",
+      price: 99,
+      description: "si",
+      availability: false,
+    },
+    {
+      name: "Borren a limon",
+      price: 89,
+      description: "aaaa",
+      availability: true,
+
+    },
+      {
+      name: "Borren a limon",
+      price: 89,
+      description: "aaaa",
+      availability: true,
+
+    },
+      {
+      name: "Borren a limon",
+      price: 89,
+      description: "aaaa",
+      availability: true,
+
+    },
+      {
+      name: "Borren a limon",
+      price: 89,
+      description: "aaaa",
+      availability: true,
+
+    }
   ];
 
   return (
@@ -41,7 +81,7 @@ export default function GridCatalogue() {
 const styles = {
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(7, 1fr)",
+    gridTemplateColumns: "repeat(6, 2fr)",
     gap: "1px",
     padding: "1px",
   },

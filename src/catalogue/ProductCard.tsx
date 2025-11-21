@@ -4,6 +4,7 @@ interface ProductCardProps {
   price?: number;
   description?: string;
   availability?: boolean;
+  empeñable?: string;
 }
 
 export default function ProductCard({
@@ -12,6 +13,7 @@ export default function ProductCard({
   price = 0,
   description = "No description",
   availability = false,
+
 }: ProductCardProps) {
 
   const placeholder =
@@ -45,15 +47,15 @@ const styles = {
   card: {
     width: "240px",
     padding: "15px",
-    borderRadius: "8px",
-    border: "2px solid black",
+    borderRadius: "16px",
+    border: "1px solid black",
     background: "#d7e7ffff",
-    boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+    boxShadow: "1 4px 6px rgba(0,0,0,0.2)",
     color: "#0d2b52",
     display: "flex",
     flexDirection: "column" as const,
-    gap: "8px",
-    transition: "0.2s",
+    gap: "5px",
+    transition: "0.1s",
   },
 
   image: {
