@@ -5,7 +5,7 @@ const CmponentProducCard = () => {
 
   return (
     <div
-      className="relative flex flex-row gap-5"
+      className="relative grid grid-cols-4 gap-4"
     >
       {
         mockProducts.map((product: ProductData) => (
