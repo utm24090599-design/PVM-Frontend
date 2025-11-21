@@ -3,9 +3,9 @@ import React from "react";
 interface CardBaseProps {
   image?: string;
   title: string;
-  price?: string | number;
+  price?: number | string;
   description?: string;
-  status?: "active" | "inactive" | "sold" | "new" | string;
+  count?: number;
   children?: React.ReactNode;
 }
 
@@ -14,68 +14,110 @@ const CardBase: React.FC<CardBaseProps> = ({
   title,
   price,
   description,
-  status,
+  count,
   children
 }) => {
   return (
     <div
       style={{
-        width: "260px",
-        borderRadius: "12px",
-        overflow: "hidden",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-        background: "#fff",
-        display: "flex",
-        flexDirection: "column"
+        width: "280px",
+        background: "#f0f1f4",
+        borderRadius: "20px",
+        padding: "16px",
+        position: "relative",
+        boxShadow: "0 3px 10px rgba(0,0,0,0.15)",
+        fontFamily: "'Comic Neue', cursive"
       }}
     >
-      {image ? (
-        <img
-          src={image}
-          alt={title}
-          style={{ width: "100%", height: "160px", objectFit: "cover" }}
-        />
-      ) : (
-        <div style={{ width: "100%", height: "160px", background: "#e2e2e2" }} />
-      )}
+      {/* Botón carrito */}
+      <div
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+          width: "46px",
+          height: "46px",
+          background: "#b4efbc",
+          borderRadius: "50%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "24px",
+          cursor: "pointer"
+        }}
+      >
+        🛒
+      </div>
 
-      <div style={{ padding: "12px" }}>
-        <h3 style={{ margin: 0, fontSize: "1.1rem", fontWeight: "bold" }}>
+      {/* Imagen */}
+      <div
+        style={{
+          width: "100%",
+          height: "200px",
+          background: "#d9dde2",
+          borderRadius: "14px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          overflow: "hidden"
+        }}
+      >
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover"
+            }}
+          />
+        ) : (
+          <div style={{ fontSize: "60px", opacity: 0.3 }}>🖼️</div>
+        )}
+      </div>
+
+      {/* Texto */}
+      <div style={{ marginTop: "14px" }}>
+        <div
+          style={{
+            fontWeight: "bold",
+            fontSize: "1.2rem"
+          }}
+        >
           {title}
-        </h3>
+        </div>
 
-        {price && (
-          <p style={{ margin: "6px 0", fontWeight: "bold", color: "#333" }}>
+        {price !== undefined && (
+          <div
+            style={{
+              fontWeight: "bold",
+              fontSize: "1rem",
+              marginTop: "4px"
+            }}
+          >
             ${price}
-          </p>
+          </div>
         )}
 
         {description && (
-          <p style={{ margin: "6px 0", color: "#555", fontSize: "0.9rem" }}>
-            {description}
-          </p>
-        )}
-
-        {status && (
-          <span
+          <div
             style={{
-              display: "inline-block",
-              padding: "4px 8px",
-              borderRadius: "6px",
-              fontSize: "0.8rem",
-              background:
-                status === "active"
-                  ? "#d1f7d6"
-                  : status === "sold"
-                  ? "#f7d1d1"
-                  : "#e0e0e0"
+              marginTop: "6px",
+              fontSize: "0.95rem"
             }}
           >
-            {status.toUpperCase()}
-          </span>
+            {description}
+          </div>
         )}
 
-        <div style={{ marginTop: "10px" }}>{children}</div>
+        {count !== undefined && (
+          <div style={{ marginTop: "8px", fontSize: "0.9rem" }}>
+            Disponible: <strong>{count}</strong>
+          </div>
+        )}
+
+        <div style={{ marginTop: "12px" }}>{children}</div>
       </div>
     </div>
   );

@@ -1,8 +1,6 @@
-
-
-const skeletonStyle = {
-  background: "#e5e5e5",
-  borderRadius: "8px",
+const skeleton = {
+  background: "#dcdcdc",
+  borderRadius: "10px",
   animation: "pulse 1.2s infinite ease-in-out"
 };
 
@@ -10,33 +8,33 @@ const CardSkeleton = () => {
   return (
     <div
       style={{
-        width: "260px",
-        borderRadius: "12px",
-        overflow: "hidden",
-        background: "#fff",
-        boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
+        width: "280px",
+        background: "#f0f1f4",
+        padding: "16px",
+        borderRadius: "20px",
+        boxShadow: "0 3px 10px rgba(0,0,0,0.15)"
       }}
     >
-      <div style={{ ...skeletonStyle, height: "160px" }}></div>
+      <div style={{ ...skeleton, height: "200px" }} />
 
-      <div style={{ padding: "12px" }}>
-        <div style={{ ...skeletonStyle, height: "16px", width: "70%" }}></div>
+      <div style={{ marginTop: "14px" }}>
+        <div style={{ ...skeleton, height: "20px", width: "70%" }} />
         <div
           style={{
-            ...skeletonStyle,
-            height: "14px",
+            ...skeleton,
+            height: "16px",
             width: "40%",
             marginTop: "10px"
           }}
-        ></div>
+        />
         <div
           style={{
-            ...skeletonStyle,
-            height: "12px",
+            ...skeleton,
+            height: "14px",
             width: "90%",
             marginTop: "8px"
           }}
-        ></div>
+        />
       </div>
     </div>
   );
