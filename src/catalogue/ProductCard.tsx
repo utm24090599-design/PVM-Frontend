@@ -1,10 +1,10 @@
-// src/catalogue/ProductCard.tsx
 import { useState } from "react";
 // ➡️ IMPORTACIONES AJUSTADAS
 import type { ProductData } from "../utils/mockData";
 import StockBadge from "../Components/feedback/StockBadge";
 import QuickActionMenu from "../Components/inputs/QuickActionMenu";
 import AddToCartButton from "../Components/AddToCartButton";
+
 
 // ➡️ Definimos las props que debe recibir la tarjeta
 interface ProductCardProps {
