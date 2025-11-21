@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
 import EmailInput from './inputs/EmailInput';
-import NameInput from './inputs/NameInput';
 import PasswordInput from './inputs/PasswordInput';
 
 function LoginForm()
