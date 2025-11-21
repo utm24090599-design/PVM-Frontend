@@ -25,9 +25,9 @@ function LoginForm()
           setError(error);
         }
     };
-
+//Formulario
     return (
-      < form onSubmit ={ handleSubmit}>
+< form onSubmit ={ handleSubmit}>
         < h2 > Login </ h2 >
         <EmailInput
          label = "Email"
