@@ -1,12 +1,15 @@
 // src/routes/AppRoutes.tsx
 
 import { Routes, Route } from 'react-router-dom';
+import Login from '../pages/TestLogin';
 import LoginForm from '../Components/LoginScreen';
 import Dashboard from '../pages/TestDashboard';
 import ProtectedRoute from '../auth/ProtectedRoute';
 import Form from '../form/form';
 // ➡️ AÑADIR TU PÁGINA DE PRUEBA
 import StockTestPage from '../pages/StockTestPage'; 
+import TestConnection from '../Components/Testconection';
+import DemoFeedback from '../Components/DemoFeedback';
 
 export default function AppRouter() {
   return (
@@ -27,6 +30,10 @@ export default function AppRouter() {
         }
       />
       {/* <Route path="*" element={<NotFound />} /> */}
+      {/* Test Routes for devs */}
+      <Route path="/TestConn" element={<TestConnection />} />
+      <Route path="/TestLogin" element={<Login />} />
+      <Route path="/DemoFeedback" element={<DemoFeedback />} />
     </Routes>
   );
 }

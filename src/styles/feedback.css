@@ -1,0 +1,86 @@
+.feedback-toast-wrapper {
+  position: fixed;
+  right: 16px;
+  top: 16px;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  min-width: 240px;
+  max-width: 360px;
+  padding: 10px;
+  border-radius: 8px;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  transform: translateX(20px);
+  animation: slideIn .28s ease forwards;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.toast__icon { margin-right: 10px; display:flex; align-items:center; }
+.toast__message { font-size: 14px; }
+.toast__close {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.toast--success { background: linear-gradient(90deg,#28a745,#2ecc71); }
+.toast--error { background: linear-gradient(90deg,#e53e3e,#ff6b6b); }
+.toast--info { background: linear-gradient(90deg,#3182ce,#63b3ed); }
+
+/* icon animations */
+.icon { width: 20px; height: 20px; display:block; color: #fff; }
+.icon--success { animation: pop .5s ease; transform-origin: center; }
+.icon--error { animation: shake .5s ease; transform-origin: center; }
+.icon--info { animation: pulse 1s infinite; transform-origin: center; }
+
+/* modal */
+.feedback-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(7,11,20,0.45);
+  z-index: 9100;
+}
+.feedback-modal {
+  background: #fff;
+  color: #111;
+  padding: 18px;
+  border-radius: 10px;
+  width: min(520px, 92%);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  text-align: center;
+  animation: modalPop .22s cubic-bezier(.2,.9,.4,1);
+}
+.modal__icon { margin: 8px auto; width: 56px; height: 56px; border-radius: 50%; display:flex; align-items:center; justify-content:center; color: #fff; }
+.modal__icon--success { background: linear-gradient(90deg,#28a745,#2ecc71); animation: pop .28s; }
+.modal__icon--error { background: linear-gradient(90deg,#e53e3e,#ff6b6b); animation: shake .4s; }
+.modal__icon--info { background: linear-gradient(90deg,#3182ce,#63b3ed); animation: pulse 1.2s infinite; }
+.modal__title { margin: 6px 0 4px; font-size: 18px; }
+.modal__message { font-size: 15px; color: #333; margin-bottom: 14px; }
+
+/* buttons minimal */
+.btn { padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; }
+.btn--primary { background: #2563eb; color: #fff; }
+.btn--ghost { background: transparent; border: 1px solid #d1d5db; color: #111; margin-left: 8px; }
+
+/* animations */
+@keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity:1; transform: translateX(0); } }
+@keyframes pop { 0% { transform: scale(.6); opacity:0 } 60% { transform: scale(1.08); opacity:1 } 100% { transform: scale(1); } }
+@keyframes shake { 0% { transform: rotate(0) } 20% { transform: rotate(-15deg) } 40% { transform: rotate(10deg) } 60% { transform: rotate(-6deg) } 80% { transform: rotate(4deg) } 100% { transform: rotate(0) } }
+@keyframes pulse { 0% { transform: scale(1) } 50% { transform: scale(1.06) } 100% { transform: scale(1) } }
+@keyframes modalPop { from { transform: translateY(8px) scale(.98); opacity:0 } to { transform: translateY(0) scale(1); opacity:1 } }
