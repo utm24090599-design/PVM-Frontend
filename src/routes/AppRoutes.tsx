@@ -34,6 +34,7 @@ export default function AppRouter() {
       <Route path="/TestConn" element={<TestConnection />} />
       <Route path="/TestLogin" element={<Login />} />
       <Route path="/DemoFeedback" element={<DemoFeedback />} />
+      <Route path="/OrderSummary" element={<OrderSummary />} />
     </Routes>
   );
 }
