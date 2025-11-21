@@ -2,8 +2,8 @@ import './App.css'
 import AppRouter from './routes/AppRoutes'
 import { FeedbackProvider } from './contexts/FeedbackProvider'
 
+
 function App() {
-  
   return (
     <>
       <FeedbackProvider>
@@ -13,4 +13,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
