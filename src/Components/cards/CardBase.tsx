@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface CardBaseProps {
   image?: string;
@@ -17,6 +17,13 @@ const CardBase: React.FC<CardBaseProps> = ({
   count,
   children
 }) => {
+  const [hover, setHover] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAdd = () => setQuantity((q) => q + 1);
+  const handleRemove = () =>
+    setQuantity((q) => (q > 0 ? q - 1 : 0));
+
   return (
     <div
       style={{
@@ -26,8 +33,11 @@ const CardBase: React.FC<CardBaseProps> = ({
         padding: "16px",
         position: "relative",
         boxShadow: "0 3px 10px rgba(0,0,0,0.15)",
-        fontFamily: "'Comic Neue', cursive"
+        fontFamily: "'Comic Neue', cursive",
+        overflow: "hidden"
       }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       {/* Botón carrito */}
       <div
@@ -43,7 +53,8 @@ const CardBase: React.FC<CardBaseProps> = ({
           justifyContent: "center",
           alignItems: "center",
           fontSize: "24px",
-          cursor: "pointer"
+          cursor: "pointer",
+          zIndex: 2
         }}
       >
         🛒
@@ -77,38 +88,18 @@ const CardBase: React.FC<CardBaseProps> = ({
         )}
       </div>
 
-      {/* Texto */}
+      {/* Info */}
       <div style={{ marginTop: "14px" }}>
-        <div
-          style={{
-            fontWeight: "bold",
-            fontSize: "1.2rem"
-          }}
-        >
-          {title}
-        </div>
+        <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>{title}</div>
 
         {price !== undefined && (
-          <div
-            style={{
-              fontWeight: "bold",
-              fontSize: "1rem",
-              marginTop: "4px"
-            }}
-          >
+          <div style={{ fontWeight: "bold", fontSize: "1rem", marginTop: "4px" }}>
             ${price}
           </div>
         )}
 
         {description && (
-          <div
-            style={{
-              marginTop: "6px",
-              fontSize: "0.95rem"
-            }}
-          >
-            {description}
-          </div>
+          <div style={{ marginTop: "6px", fontSize: "0.95rem" }}>{description}</div>
         )}
 
         {count !== undefined && (
@@ -119,6 +110,82 @@ const CardBase: React.FC<CardBaseProps> = ({
 
         <div style={{ marginTop: "12px" }}>{children}</div>
       </div>
+
+      {/* --- HOVER OVERLAY FUNCIONAL --- */}
+      {hover && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.55)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "12px",
+            transition: "0.3s",
+            color: "#fff",
+            zIndex: 3
+          }}
+        >
+          {/* Selector + y - */}
+          <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+            <button
+              onClick={handleRemove}
+              style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                background: "#73d7b2ff",
+                border: "none",
+                fontSize: "22px",
+                cursor: "pointer"
+              }}
+            >
+              –
+            </button>
+
+            <span style={{ fontSize: "22px", fontWeight: "bold" }}>
+              {quantity}
+            </span>
+
+            <button
+              onClick={handleAdd}
+              style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                background: "#74bc9cff",
+                border: "none",
+                fontSize: "22px",
+                cursor: "pointer"
+              }}
+            >
+              +
+            </button>
+          </div>
+
+          {/* Botón pagar */}
+          <button
+            style={{
+              padding: "10px 22px",
+              borderRadius: "10px",
+              background: "#4caf50",
+              color: "white",
+              border: "none",
+              fontWeight: "bold",
+              cursor: "pointer",
+              fontSize: "1rem"
+            }}
+            onClick={() => alert(`Pagar ${quantity} unidades de ${title}`)}
+          >
+            Pagar
+          </button>
+        </div>
+      )}
     </div>
   );
 };
