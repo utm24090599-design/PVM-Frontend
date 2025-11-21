@@ -1,10 +1,11 @@
-
 import { Routes, Route } from 'react-router-dom';
-import Login from '../pages/TestLogin';
+// import Login from '../pages/TestLogin';
 import LoginForm from '../Components/LoginScreen';
 import Dashboard from '../pages/TestDashboard';
+// import NotFound from '../pages/NotFound';
 import ProtectedRoute from '../auth/ProtectedRoute';
 import Form from '../form/form';
+
 import GridCatalogue from '../catalogue/ProductGrid';
 import ProductCard from '../catalogue/ProductCard';
 
@@ -17,11 +18,6 @@ import OrderSummary from '../Components/OrderSummary';
 export default function AppRouter() {
   return (
     <Routes>
-      
-      {/* ➡️ AÑADIR RUTA TEMPORAL PARA TESTING ⬅️ */}
-      <Route path="/test-stock" element={<StockTestPage />} />
-      <Route path="/cards-demo" element={<CardsDemo />} />
-      {/* Rutas originales de tu proyecto (NO MODIFICADAS) */}
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<Form />} />
       <Route
