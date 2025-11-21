@@ -1,13 +1,16 @@
 import './App.css'
 import AppRouter from './routes/AppRoutes'
+import { FeedbackProvider } from './contexts/FeedbackProvider'
+
 
 function App() {
-  
   return (
     <>
-      <AppRouter />
+      <FeedbackProvider>
+        <AppRouter />
+      </FeedbackProvider>
     </>
   )
 }
 
-export default App
+export default App;
