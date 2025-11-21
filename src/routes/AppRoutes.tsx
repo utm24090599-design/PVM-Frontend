@@ -35,7 +35,7 @@ export default function AppRouter() {
       {/* <Route path="*" element={<NotFound />} /> */}
       <Route path="/GridCatalogue" element={<GridCatalogue />} />
       <Route path="/form" element={<Form />} />
-      <Route path="/card" element={<ProductCard />} />
+      {/* <Route path="/card" element={<ProductCard />} /> */}
 
       {/* Test Routes for devs */}
       <Route path="/TestConn" element={<TestConnection />} />

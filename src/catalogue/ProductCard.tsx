@@ -9,7 +9,7 @@ import AddToCartButton from "../Components/AddToCartButton";
 // ➡️ Definimos las props que debe recibir la tarjeta
 interface ProductCardProps {
   data: ProductData; // El producto a mostrar
-  onClick: (data: ProductData) => void; // Función para abrir la vista detallada
+  onClick?: (data: ProductData) => void; // Función para abrir la vista detallada
 }
 
 // ➡️ REEMPLAZA TU FUNCIÓN card() por esta
@@ -27,7 +27,7 @@ export default function ProductCard({ data, onClick }: ProductCardProps) {
   // Handler para la desactivación del clic
   const handleCardClick = () => {
     if (isAvailable) {
-      onClick(data); // Ejecuta la acción solo si está disponible
+      onClick?.(data); // Ejecuta la acción solo si está disponible
     }
   };
 
@@ -105,6 +105,7 @@ export default function ProductCard({ data, onClick }: ProductCardProps) {
 
       <h3 className="font-semibold text-sm truncate">{data.title}</h3>
       <p className="text-lg font-bold">${data.price.toFixed(2)}</p>
+      <p className="text-lg font-bold">{data.description}</p>
 
       {/* Uso de StockBadge */}
       <div className="mt-1">

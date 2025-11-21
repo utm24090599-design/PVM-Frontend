@@ -13,8 +13,11 @@ export default function AddToCartButton({
 }: AddToCartButtonProps) {
   return (
     <button
+      type="button"
       onClick={onAdd}
       disabled={disabled}
+      aria-label={label}
+      title={label}
       className={`px-3 py-2 rounded-md text-white ${
         disabled ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
       }`}
