@@ -5,6 +5,9 @@ import LoginForm from '../Components/LoginScreen';
 import Dashboard from '../pages/TestDashboard';
 import ProtectedRoute from '../auth/ProtectedRoute';
 import Form from '../form/form';
+import GridCatalogue from '../catalogue/ProductGrid';
+import ProductCard from '../catalogue/ProductCard';
+
 // ➡️ AÑADIR TU PÁGINA DE PRUEBA
 import StockTestPage from '../pages/StockTestPage'; 
 import TestConnection from '../Components/Testconection';
@@ -30,6 +33,10 @@ export default function AppRouter() {
         }
       />
       {/* <Route path="*" element={<NotFound />} /> */}
+      <Route path="/GridCatalogue" element={<GridCatalogue />} />
+      <Route path="/form" element={<Form />} />
+      <Route path="/card" element={<ProductCard />} />
+
       {/* Test Routes for devs */}
       <Route path="/TestConn" element={<TestConnection />} />
       <Route path="/TestLogin" element={<Login />} />
