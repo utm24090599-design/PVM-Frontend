@@ -30,7 +30,7 @@ export const required = (msg = 'Campo obligatorio.') => (v: string) => (v.trim()
 export const minLength = (n: number, msg?: string) => (v: string) => (v.length >= n ? null : msg || `Mínimo ${n} caracteres.`);
 export const emailFormat = (msg = 'Formato de email inválido.') => (v: string) => {
   if (v.trim().length === 0) return null; // allow empty, combine with required if needed
-  const re = /^(?:[a-zA-Z0-9_'^&\/+-])+(?:\.(?:[a-zA-Z0-9_'^&\/+-])+)*@(?:(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}|\[(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\])$/;
+  const re = new RegExp("^(?:[a-zA-Z0-9_'^&/+-])+(?:\\.(?:[a-zA-Z0-9_'^&/+-])+)*@(?:(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}|\\[(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\])$");
   return re.test(v.trim()) ? null : msg;
 };
 export const nameFormat = (msg = 'Nombre inválido.') => (v: string) => {

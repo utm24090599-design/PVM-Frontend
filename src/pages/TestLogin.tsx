@@ -15,7 +15,7 @@ export default function Login() {
   return (
     <div>
       <h2>Login</h2>
-      <select value={role} onChange={(e) => setRole(e.target.value)}>
+      <select title='select' value={role} onChange={(e) => setRole(e.target.value)}>
         <option value="user">User</option>
         <option value="admin">Admin</option>
       </select>

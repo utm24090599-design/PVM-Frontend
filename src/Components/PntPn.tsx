@@ -1,7 +1,7 @@
 //Integración en la vista principal
 import React from "react";
 import OrderSummary from "./OrderSummary";
-import ConfirmOrderButton from "./ConfirmOrderButton";
+import ConfirmOrderButton from "./ui/ConfirmOrderButton";
 
 const CheckoutPage: React.FC = () => {
   const products = [

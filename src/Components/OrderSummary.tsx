@@ -1,6 +1,6 @@
 //Este componente se encarga de mostrar: Lista de productos con nombre, cantidad y subtotal. Totales generales (subtotal, impuestos, total final).
 import React from "react";
-import ConfirmOrderButton from "./ConfirmOrderButton";
+import ConfirmOrderButton from "./ui/ConfirmOrderButton";
 
 interface Product {
   id: number;

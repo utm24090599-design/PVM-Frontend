@@ -1,5 +1,3 @@
-// src/Components/inputs/QuickActionMenu.tsx
-
 import React, { useState, useEffect } from 'react';
 import type { ProductData } from '../../utils/mockData';
 import { updateProductQuantity, getSelectedProducts } from '../../utils/storage';
@@ -18,7 +16,7 @@ const QuickActionMenu: React.FC<QuickActionMenuProps> = ({ data, maxStock }) => 
   
   const stopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigate('/Principal')
+    
   };
 
   // Cargar la cantidad guardada al montar
@@ -62,7 +60,10 @@ const QuickActionMenu: React.FC<QuickActionMenuProps> = ({ data, maxStock }) => 
         
         {/* PAYBUTTON CON VALIDACIÓN Y DETENCIÓN DE PROPAGACIÓN */}
         <button 
-          onClick={stopPropagation} // ⬅️ Detiene la propagación del clic del PayButton
+          onClick={(e) => {
+            stopPropagation(e);
+            navigate('/Principal');
+          }}
           disabled={isPayButtonDisabled} 
           className={`
             py-2 px-4 rounded-lg font-semibold shadow-md 

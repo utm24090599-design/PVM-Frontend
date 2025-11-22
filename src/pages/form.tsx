@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./form.css";
-import NameInput from "../Components/inputs/NameInput";
-import EmailInput from "../Components/inputs/EmailInput";
-import PasswordInput from "../Components/inputs/PasswordInput";
+import "../styles/form.css";
+import NameInput from "../components/ui/NameInput";
+import EmailInput from "../components/ui/EmailInput";
+import PasswordInput from "../components/ui/PasswordInput";
 
 export default function Form() {
   const [formData, setFormData] = useState({
@@ -15,12 +15,6 @@ export default function Form() {
   const [validemail, setvalidemail] = useState (false);
   const [validNombre, setvalidNombre] = useState (false);
   const [mensaje, setMensaje] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +46,6 @@ export default function Form() {
           }}
           onBlur={(value, valid)=>{
             setvalidNombre(valid);
-
           }}
          />
         
@@ -67,7 +60,6 @@ export default function Form() {
           }}
           onBlur={(value, valid)=>{
             setvalidemail(valid);
-
           }}
          />
           
