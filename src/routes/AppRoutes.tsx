@@ -1,13 +1,10 @@
-import { Routes, Route } from 'react-router-dom';
-import Login from '../pages/TestLogin';
-import LoginForm from '../Components/LoginScreen';
-import Dashboard from '../pages/TestDashboard';
-import ProtectedRoute from '../auth/ProtectedRoute';
-import Form from '../form/form';
-import GridCatalogue from '../catalogue/ProductGrid';
-import TestConnection from '../Components/Testconection';
-import DemoFeedback from '../Components/DemoFeedback';
-import Principal from "../pages/PrincipalInterface";
+import { Routes, Route } from "react-router-dom";
+import LoginForm from "../pages/LoginScreen";
+import Dashboard from "../pages/TestDashboard";
+import ProtectedRoute from "../auth/ProtectedRoute";
+import Form from "../pages/form";
+import GridCatalogue from "../catalogue/ProductGrid";
+import MainLayout from "../layouts/MainLayout";
 
 export default function AppRouter() {
   return (
@@ -15,22 +12,20 @@ export default function AppRouter() {
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<Form />} />
       <Route
-        path="/"
         element={
           <ProtectedRoute>
-            <Dashboard />
+             <Route path="/" element={<MainLayout />}>
+             </Route>
           </ProtectedRoute>
         }
       />
 
-      {/* Test Routes for devs */}
-      <Route path="/TestConn" element={<TestConnection />} />
-      <Route path="/TestLogin" element={<Login />} />
-      <Route path="/DemoFeedback" element={<DemoFeedback />} />
-      <Route path="/testDashboard" element={<Dashboard />} />
-      <Route path="/Principal" element={<Principal />} />
-      <Route path="/GridCatalogue" element={<GridCatalogue />} />
-      <Route path="/form" element={<Form />} />
+      {/* Rutas bajo MainLayout */}
+      <Route path="/app" element={<MainLayout />}>
+        <Route path="dashboard" element={<Dashboard />} />
+        {/* aquí puedes agregar más hijos */}
+        <Route path="catalogue" element={<GridCatalogue />} />
+      </Route>
     </Routes>
   );
 }

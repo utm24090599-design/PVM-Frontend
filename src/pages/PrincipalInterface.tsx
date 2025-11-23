@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import "../styles/Estilos.css"
-import PaymentForm from '../Components/PaymentForm';
-import CartSummary from '../Components/CartSummary';
-import ConfirmOrderButton from '../Components/ConfirmOrderButton';
+import PaymentForm from '../components/PaymentForm';
+import CartSummary from '../components/CartSummary';
+import ConfirmOrderButton from '../components/ui/ConfirmOrderButton';
 
 const Principal = () => {
   const [formData, setFormData] = useState({});

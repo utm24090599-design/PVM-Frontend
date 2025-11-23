@@ -41,7 +41,7 @@ export const mockProducts: ProductData[] = [
     id: 101,
     title: generateRandomTitle(),
     price: 150.75,
-    count: Math.floor(Math.random() * 100),
+    count: 0,
     description: "Modelo industrial de alta resistencia.",
     colorVariables: true,
   },
