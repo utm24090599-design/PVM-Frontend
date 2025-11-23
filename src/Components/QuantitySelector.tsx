@@ -1,5 +1,3 @@
-import React from "react";
-
 type QuantityValidatorProps = {
   quantity: number;
   stock: number;

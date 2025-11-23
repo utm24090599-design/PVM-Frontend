@@ -1,5 +1,5 @@
-import ProductCard from "../../catalogue/ProductCard";
-import { mockProducts, type ProductData } from "../../utils/mockData";
+import ProductCard from "../catalogue/ProductCard";
+import { mockProducts, type ProductData } from "../utils/mockData";
 
 const CmponentProducCard = () => {
 
@@ -9,7 +9,6 @@ const CmponentProducCard = () => {
     >
       {
         mockProducts.map((product: ProductData) => (
-          
           <ProductCard
             key={product.id}
             data={product}

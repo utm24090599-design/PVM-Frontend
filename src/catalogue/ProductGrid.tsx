@@ -6,22 +6,14 @@ export default function GridCatalogue() {
   const products = mockProducts;
 
   return (
-    <div style={styles.grid}>
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))]  place-items-center">
       {products.map((p) => (
         <ProductCard
           key={p.id}
           data={p}
+          // onClick={}
         />          
       ))}
     </div>
   );
 }
-
-const styles = {
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "4px",
-    placeItems: "center",
-  },
-};

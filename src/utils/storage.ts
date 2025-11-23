@@ -1,4 +1,5 @@
 // src/utils/storage.ts
+import type { CartItem } from "../components/types/cart";
 
 // --- Tipos para la nueva lógica de productos ---
 interface StoredProduct {
@@ -65,4 +66,13 @@ export const updateProductQuantity = (productId: number, newQuantity: number): v
   }
 
   saveSelectedProducts(products);
+};
+
+export const saveCart = (cart: CartItem[]) => {
+  localStorage.setItem("cart", JSON.stringify(cart));
+};
+
+export const loadCart = (): CartItem[] => {
+  const saved = localStorage.getItem("cart");
+  return saved ? JSON.parse(saved) : [];
 };

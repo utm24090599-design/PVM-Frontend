@@ -1,27 +1,10 @@
-import React, { createContext, useCallback, useContext, useState } from 'react'
-import Toasts from '../Components/Toast'
-import Modal from '../Components/Modal'
+import React, { useCallback, useState } from 'react'
+import Toasts from '../components/toasts/Toast'
+import Modal from '../components/modals/Modal'
 import '../styles/feedback.css'
-
-type ToastType = 'success' | 'error' | 'info'
-type ToastItem = { id: string; type: ToastType; message: string; timeout?: number }
-
-type ConfirmOptions = {
-  title?: string
-  message: string
-  onConfirm: () => void
-  onCancel?: () => void
-  confirmText?: string
-  cancelText?: string
-  icon?: 'success' | 'error' | 'info'
-}
-
-type FeedbackContextValue = {
-  showToast: (t: { type: ToastType; message: string; timeout?: number }) => void
-  showConfirm: (opts: ConfirmOptions) => void
-}
-
-const FeedbackContext = createContext<FeedbackContextValue | undefined>(undefined)
+// import types + context from the new file
+import { FeedbackContext } from '../contexts/feedbackContext'
+import type { ToastItem, ConfirmOptions, FeedbackContextValue, ToastType } from '../contexts/feedbackContext'
 
 export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<ToastItem[]>([])
@@ -71,10 +54,4 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       )}
     </FeedbackContext.Provider>
   )
-}
-
-export const useFeedbackContext = () => {
-  const ctx = useContext(FeedbackContext)
-  if (!ctx) throw new Error('useFeedbackContext must be used within FeedbackProvider')
-  return ctx
 }

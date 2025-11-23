@@ -1,5 +1,3 @@
-import React from 'react'
-
 type ToastType = 'success' | 'error' | 'info'
 type ToastItem = { id: string; type: ToastType; message: string }
 

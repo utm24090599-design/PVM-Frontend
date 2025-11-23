@@ -65,8 +65,11 @@ export default function TestConnection() {
         </button>
       </div>
 
-      <label className="text-sm mb-1 block">Respuesta del backend:</label>
+      <label htmlFor="response-textarea" className="text-sm mb-1 block">Respuesta del backend:</label>
       <textarea
+        id="response-textarea"
+        title="Respuesta del backend"
+        placeholder="La respuesta del backend aparecerá aquí"
         readOnly
         value={error ? `ERROR: ${String(error)}` : responseText}
         rows={6}
