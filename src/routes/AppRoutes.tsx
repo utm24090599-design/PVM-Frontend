@@ -5,6 +5,7 @@ import ProtectedRoute from "../auth/ProtectedRoute";
 import Form from "../pages/form";
 import GridCatalogue from "../catalogue/ProductGrid";
 import MainLayout from "../layouts/MainLayout";
+import StockIssueTest from "../Components/Sure/Check";
 
 export default function AppRouter() {
   return (
@@ -12,6 +13,8 @@ export default function AppRouter() {
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<Form />} />
       <Route path="/catalogue" element={<GridCatalogue />} />
+      <Route path="/stckissue" element={<StockIssueTest />} />
+
       <Route
         element={
           <ProtectedRoute>
@@ -24,7 +27,10 @@ export default function AppRouter() {
       {/* Rutas bajo MainLayout */}
       <Route path="/app" element={<MainLayout />}>
         <Route path="dashboard" element={<Dashboard />} />
+    
+
         {/* aquí puedes agregar más hijos */}
+        
       </Route>
     </Routes>
   );
