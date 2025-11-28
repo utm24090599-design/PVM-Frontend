@@ -15,8 +15,8 @@ export default function AppRouter() {
       <Route
         element={
           <ProtectedRoute>
-             <Route path="/" element={<MainLayout />}>
-             </Route>
+            <Route path="/" element={<MainLayout />}>
+            </Route>
           </ProtectedRoute>
         }
       />
