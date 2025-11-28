@@ -5,6 +5,7 @@ import ProtectedRoute from "../auth/ProtectedRoute";
 import Form from "../pages/form";
 import GridCatalogue from "../catalogue/ProductGrid";
 import MainLayout from "../layouts/MainLayout";
+import ItemDescription from "../pages/ItemDescription";
 
 export default function AppRouter() {
   return (
@@ -25,7 +26,9 @@ export default function AppRouter() {
         <Route path="dashboard" element={<Dashboard />} />
         {/* aquí puedes agregar más hijos */}
         <Route path="catalogue" element={<GridCatalogue />} />
+        <Route path="itemDescription/:id" element={<ItemDescription />} />
       </Route>
+      
     </Routes>
   );
 }

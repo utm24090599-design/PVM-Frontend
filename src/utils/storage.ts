@@ -1,5 +1,5 @@
 // src/utils/storage.ts
-import type { CartItem } from "../components/types/cart";
+import type { CartItem } from "../types/cart";
 
 // --- Tipos para la nueva lógica de productos ---
 interface StoredProduct {

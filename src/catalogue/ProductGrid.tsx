@@ -2,7 +2,6 @@ import { mockProducts } from "../utils/mockData";
 import ProductCard from "./ProductCard";
 
 export default function GridCatalogue() {
-  // Mock data de productos
   const products = mockProducts;
 
   return (
@@ -11,7 +10,6 @@ export default function GridCatalogue() {
         <ProductCard
           key={p.id}
           data={p}
-          // onClick={}
         />          
       ))}
     </div>
