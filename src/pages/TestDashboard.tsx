@@ -7,6 +7,10 @@ import { mockOrders } from '../Components/types/orderTypes';
 // Importamos OrderList y OrderDetails del directorio 'components'
 import OrderList from '../Components/OrderList'; 
 import OrderDetails from '../Components/OrderDetails'; // ¡Ruta de importación corregida!
+import { useAuth } from '../auth/UseAuth';
+import GridCatalogue from '../catalogue/ProductGrid';
+// import OrderSection from '../components/OrderSection';
+// import CheckoutPage from '../components/PntPn';
 
 export default function TestDashboard() {
   const [selectedItem, setSelectedItem] = useState<OrderItem | null>(null);
@@ -17,9 +21,18 @@ export default function TestDashboard() {
   const selectedOrder = selectedItem 
     ? orders.find(order => order.items.some(item => item.id === selectedItem.id)) // ✨ CORRECCIÓN: Usar item.id en lugar de item.sku
     : null;
+    
+  const { role } = useAuth();
 
   return (
-    <div className="flex h-screen bg-gray-50 p-4 space-x-4">
+    <div className=''>
+      <h1>{role}</h1>
+      <button type='button' onClick={()=>{
+        localStorage.removeItem("cart");
+      }}>Remove items</button>
+      <GridCatalogue />
+      
+      <div className="flex h-screen bg-gray-50 p-4 space-x-4">
       {/* Columna Izquierda: Lista de Órdenes y Artículos */}
       <div className="w-1/2 p-4 bg-white rounded-xl shadow-lg flex flex-col">
         <h1 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2">Dashboard de Recogida</h1>

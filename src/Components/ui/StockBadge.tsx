@@ -4,9 +4,10 @@ import React from 'react';
 
 interface StockBadgeProps {
   count: number;
+  className?: string
 }
 
-const StockBadge: React.FC<StockBadgeProps> = ({ count }) => {
+const StockBadge: React.FC<StockBadgeProps> = ({ count, className }) => {
   const isAvailable = count > 0;
   
   // Clases de Tailwind CSS para el estilo condicional
@@ -18,7 +19,7 @@ const StockBadge: React.FC<StockBadgeProps> = ({ count }) => {
 
   return (
     <span 
-      className={`inline-block px-2 py-0.5 text-xs font-semibold rounded-full border ${badgeClasses} transition-opacity duration-300`}
+      className={`inline-block px-2 py-0.5 text-xs font-semibold rounded-full border ${badgeClasses} transition-opacity duration-300 ${className} `}
     >
       {text}
     </span>

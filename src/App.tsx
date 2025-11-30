@@ -7,11 +7,7 @@ import { CartProvider } from './Components/CartContext'
 function App() {
   return (
     <>
-    <CartProvider>
-      <FeedbackProvider>
-        <AppRouter />
-      </FeedbackProvider>
-    </CartProvider>
+      <AppRouter />
     </>
   )
 }
