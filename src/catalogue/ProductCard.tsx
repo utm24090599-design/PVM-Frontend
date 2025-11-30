@@ -53,7 +53,7 @@ export default function ProductCard({ data, onClick }: ProductCardProps) {
           onAdd={() => addToCart({
             ...data, quantity: cartQuantity,
             name: ""
-          })} // ✅ conecta con el contexto
+          })}
           disabled={!isAvailable}
         />
       </div>

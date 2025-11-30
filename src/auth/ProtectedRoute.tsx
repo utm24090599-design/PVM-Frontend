@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from './UseAuth';
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export default function ProtectedRoute({ children }: Props) {
