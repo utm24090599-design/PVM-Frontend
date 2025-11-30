@@ -1,33 +1,50 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/form.css";
 import NameInput from "../components/ui/NameInput";
 import EmailInput from "../components/ui/EmailInput";
 import PasswordInput from "../components/ui/PasswordInput";
+import { createUser } from "../utils/userStorage";
 
 export default function Form() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: "",
     usuario: "",
     password: "",
   });
-  const [validpassword, setvalidpassword] = useState (false);
-  const [validemail, setvalidemail] = useState (false);
-  const [validNombre, setvalidNombre] = useState (false);
+  const [validpassword, setValidPassword] = useState(false);
+  const [validemail, setValidEmail] = useState(false);
+  const [validNombre, setValidNombre] = useState(false);
   const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    setMensaje("");
+
+    // Validar que todos los campos sean válidos
+    if (!validNombre || !validemail || !validpassword) {
+      setError("Por favor completa todos los campos correctamente");
+      return;
+    }
+
     try {
-       //por ahora depende de la peticion que se realiza al back para enviar los datos registrados
-      const response = await axios.post(
-        "Backend", 
-        formData
-      );
-      setMensaje("Usuario registrado: " + response.data.message);
-    } catch (error) {
-      console.error(error);
-      setMensaje(" Error al registrar usuario");
+      // Crear usuario localmente
+      createUser(formData.nombre, formData.usuario, formData.password, 'CLIENT');
+      setMensaje("Usuario registrado exitosamente. Redirigiendo al login...");
+      
+      // Redirigir al login después de 1.5 segundos
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Error al registrar usuario");
+      }
     }
   };
 
@@ -42,10 +59,10 @@ export default function Form() {
           value={formData.nombre}
           onChange={(value, valid) => {
             setFormData((prev) => ({...prev, nombre: value}));
-            setvalidNombre(valid);
+            setValidNombre(valid);
           }}
-          onBlur={(value, valid)=>{
-            setvalidNombre(valid);
+          onBlur={(_value, valid)=>{
+            setValidNombre(valid);
           }}
          />
         
@@ -56,10 +73,10 @@ export default function Form() {
           value={formData.usuario}
           onChange={(value, valid) => {
             setFormData((prev) => ({...prev, usuario: value}));
-            setvalidemail(valid);
+            setValidEmail(valid);
           }}
-          onBlur={(value, valid)=>{
-            setvalidemail(valid);
+          onBlur={(_value, valid)=>{
+            setValidEmail(valid);
           }}
          />
           
@@ -71,15 +88,17 @@ export default function Form() {
           value={formData.password}
           onChange={(value, valid) => {
             setFormData((prev) => ({...prev, password: value}));
-            setvalidpassword(valid);
+            setValidPassword(valid);
           }}
-          onBlur={(value, valid)=>{
-            setvalidpassword(valid);
-
+          onBlur={(_value, valid)=>{
+            setValidPassword(valid);
           }}
          />
-        <button type="submit">Registrarse</button>
-        {mensaje && <p>{mensaje}</p>}
+        <button type="submit" disabled={!validNombre || !validemail || !validpassword}>
+          Registrarse
+        </button>
+        {error && <p className="text-red-500">{error}</p>}
+        {mensaje && <p className="text-green-500">{mensaje}</p>}
       </form>
     </div>
   );

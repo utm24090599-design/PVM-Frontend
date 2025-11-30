@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
 import "../styles/Estilos.css"
 import PaymentForm from '../components/PaymentForm';
 import CartSummary from '../components/CartSummary';
 import ConfirmOrderButton from '../components/ui/ConfirmOrderButton';
+import { useState } from "react";
 
 const Principal = () => {
   const [formData, setFormData] = useState({});
@@ -12,7 +12,7 @@ const Principal = () => {
   ];
   const total = 150;
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 

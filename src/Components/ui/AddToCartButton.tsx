@@ -1,5 +1,5 @@
 type AddToCartButtonProps = {
-  onAdd: () => void;
+  onAdd: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   label?: string;
   className?: string;
@@ -11,10 +11,15 @@ export default function AddToCartButton({
   label = "Añadir al carrito",
   className = ""
 }: AddToCartButtonProps) {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation(); // Detener propagación del evento
+    onAdd(e);
+  };
+
   return (
     <button
       type="button"
-      onClick={onAdd}
+      onClick={handleClick}
       disabled={disabled}
       aria-label={label}
       title={label}

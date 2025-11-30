@@ -1,0 +1,55 @@
+PVM / Punto de Venta Minorista 
+
+ 
+
+Description: This system is fit for stores that handle delivery of goods from concealed inventory or inventory systems under high revision from the store sellers and managers, it distributes the whole operation from the sale of their goods into different stages to handle the client order, inventory confirmation, order payment and order delivery. 
+
+ 
+
+ 
+
+Step 1: Client Order 
+
+A client request on the store from either a catalog on the reception, or a set of products on display, specifying quantity and specific product details if required or available, at this point while the system can tell beforehand if the requested products and quantity are available, it is still pending from confirmation on the next step, meanwhile, a collection order is generated in the system 
+
+ 
+
+Step 2: Order Recollection 
+
+Employees of the store gets the new collection order, and starts collecting the specified goods, at this point all material depending on modification (like from a roll of material) will not be altered but confirmed in quantity, inventory is not deducted at this point but reserved, if a specified order does not meet the available inventory, this will be reported into the order and the client will be queried if proceeding with the amount available or discarding it from the order. Once the collection and needed adjustment on the orders are made, a payment request is created, a tag is provided to the client, and the client can proceed into the payment area. 
+
+ 
+
+Step 3: Payment 
+
+The client provides the payment request tag and the payment area will ask for the requested payment, if the client for some reason cannot pay at the moment, the client can ask for it to be reserved and the order will be available for N amount of time, or cancelled and the payment order is closed and reserved inventory will be released back into available, otherwise the client pays and a delivery order is generated, the client will keep the same token previously provided for delivery 
+
+ 
+
+Step 4 – Delivery 
+
+The employees commit the order and any inventory depending on material modifications (such as part of a rolled material) will be performed while unitarian inventory will be taken directly, inventory reserved will be finally deducted, all goods are delivered to the client upon providing the token into the delivery area. All leftovers from that order is sent to the inventory management to set them back into inventory. 
+
+ 
+
+Users and Entities 
+
+Receptionist: Will take the client orders and wait for the inventory managers to confirm the amount requested by the client are available or not, and modify the order and either cancel it or confirming it 
+
+Inventory Managers: Employees in charge of collecting the materials from inventory and confirm the amount of requested materials are available, they deliver the materials to delivery area for them to prepare materials for delivery and get any material leftovers back into the inventory 
+
+Delivery Area: Employees in charge of processing material for delivery, if needed cut/modify the material as requested and provide the request for the clients upon validating the token for delivery, and deliver all material leftover back into the inventory managers. 
+
+Sale Area: Employees in charge to validate the sale token to get the order pricing and making the final sale, upon being sold the token will be updated to be provided into delivery area. 
+
+Products: All products the store manages 
+
+Inventory: All selling goods, managed by a base unit for measurement like units, weight (Kg) or length (M). 
+
+Token: A physical card that contains a number which will identify the daily sale and delivery, the store should manage them and reset their use every day. 
+
+Inventory Collection Order: An order specifying if the materials are available, the Receptionist will create it and modify it, and the Inventory Managers will confirm the details of the order are available. Once is fully confirmed it, the order will be marked as ready for payment and a token will be assigned. 
+
+Payment Registry: Will register payments for a Collection Order and invoice specific details. 
+
+Delivery Registry: Will register the delivery goods and will check if it matches the Collection Order 

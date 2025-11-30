@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useContext } from 'react' // ✨ Añadir useContext
 import Toasts from '../components/toasts/Toast'
 import Modal from '../components/modals/Modal'
 import '../styles/feedback.css'
@@ -39,7 +39,8 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         <Modal
           title={modal.title}
           message={modal.message}
-          icon={modal.icon ?? 'info'}
+          
+          icon={modal.icon as any ?? 'info'} 
           confirmText={modal.confirmText}
           cancelText={modal.cancelText}
           onConfirm={() => {
@@ -55,3 +56,12 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     </FeedbackContext.Provider>
   )
 }
+
+// Exportamos el hook 'useFeedback' para que pueda ser importado
+export const useFeedback = () => {
+  const context = useContext(FeedbackContext);
+  if (context === undefined) {
+    throw new Error('useFeedback debe usarse dentro de un FeedbackProvider');
+  }
+  return context;
+};
