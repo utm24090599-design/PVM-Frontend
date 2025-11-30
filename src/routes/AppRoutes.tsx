@@ -5,7 +5,7 @@ import ProtectedRoute from "../auth/ProtectedRoute";
 import Form from "../pages/form";
 import GridCatalogue from "../catalogue/ProductGrid";
 import MainLayout from "../layouts/MainLayout";
-import StockIssueTest from "../Components/Sure/Check";
+import StockIssueTest from "../Components/Sure/StockIssueModalPage";
 
 export default function AppRouter() {
   return (
@@ -13,7 +13,7 @@ export default function AppRouter() {
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<Form />} />
       <Route path="/catalogue" element={<GridCatalogue />} />
-      <Route path="/stckissue" element={<StockIssueTest />} />
+      <Route path="/stcki" element={<StockIssueTest />} />
 
       <Route
         element={
