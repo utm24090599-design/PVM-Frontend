@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { ProductData } from "../utils/mockData";
-import StockBadge from "../components/ui/StockBadge";
-import QuickActionMenu from "../components/inputs/QuickActionMenu";
-import AddToCartButton from "../components/ui/AddToCartButton";
+import StockBadge from "../Components/ui/StockBadge";
+import QuickActionMenu from "../Components/inputs/QuickActionMenu";
+import AddToCartButton from "../Components/ui/AddToCartButton";
 import { useCart } from "../hooks/useCart"; // ✅ importa el hook
 import "../styles/ProductCard.css";
 

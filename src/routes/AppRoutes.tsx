@@ -11,6 +11,7 @@ export default function AppRouter() {
     <Routes>
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<Form />} />
+      <Route path="/catalogue" element={<GridCatalogue />} />
       <Route
         element={
           <ProtectedRoute>
@@ -24,7 +25,6 @@ export default function AppRouter() {
       <Route path="/app" element={<MainLayout />}>
         <Route path="dashboard" element={<Dashboard />} />
         {/* aquí puedes agregar más hijos */}
-        <Route path="catalogue" element={<GridCatalogue />} />
       </Route>
     </Routes>
   );
