@@ -8,7 +8,7 @@ import { mockOrders } from "../components/types/orderTypes";
 import OrderList from "../components/OrderList";
 import OrderDetails from "../components/OrderDetails"; // ¡Ruta de importación corregida!
 import { useAuth } from "../auth/UseAuth";
-import GridCatalogue from "../catalogue/ProductGrid";
+// import GridCatalogue from "../catalogue/ProductGrid";
 // import OrderSection from '../components/OrderSection';
 // import CheckoutPage from '../components/PntPn';
 
