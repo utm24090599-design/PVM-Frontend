@@ -7,6 +7,7 @@ export interface ProductData {
   count: number; // CLAVE para la lógica de disponibilidad
   description: string;
   colorVariables: boolean; // Para simular si tiene variables como color/talla
+  colors: string[]
 }
 
 // --- Generador de nombres aleatorios ---
@@ -21,17 +22,26 @@ function generateRandomTitle(): string {
   return `${prefix} ${type} ${suffix}`;
 }
 
+const availableColors = ["Rojo", "Azul", "Verde", "Negro", "Blanco", "Amarillo", "Gris", "Naranja"];
+
+function getRandomColors() {
+  const numColors = Math.floor(Math.random() * availableColors.length) + 1;
+  const shuffled = [...availableColors].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, numColors);
+}
+
 // --- Generador de productos ---
 const products: ProductData[] = [];
 
 for (let index = 0; index < 100; index++) {
   products.push({
-    id: Math.floor(Math.random() * 1000),
+    id: Math.floor(Math.random() * 1000) + 1,
     title: generateRandomTitle(), // 🔑 ahora el título es aleatorio
     price: parseFloat((Math.random() * 200).toFixed(2)), // precio aleatorio
     count: Math.floor(Math.random() * 100), // Cantidad aleatoria entre 0 y 100
     description: "Modelo industrial de alta resistencia.",
     colorVariables: Math.random() > 0.5, // true/false aleatorio
+    colors: getRandomColors()
   });
 }
 
@@ -44,6 +54,7 @@ export const mockProducts: ProductData[] = [
     count: 0,
     description: "Modelo industrial de alta resistencia.",
     colorVariables: true,
+    colors: ["gray"]
   },
   {
     id: 102,
@@ -52,6 +63,7 @@ export const mockProducts: ProductData[] = [
     count: Math.floor(Math.random() * 100),
     description: "Sensor con amplio rango de detección.",
     colorVariables: false,
+    colors: ["gray", "red"]
   },
   {
     id: 103,
@@ -60,6 +72,7 @@ export const mockProducts: ProductData[] = [
     count: Math.floor(Math.random() * 100),
     description: "Conector estándar para tuberías.",
     colorVariables: false,
+    colors: []
   },
 ];
 
