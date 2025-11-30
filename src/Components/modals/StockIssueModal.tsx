@@ -25,14 +25,14 @@ const StockIssueModal: React.FC<StockIssueModalProps> = ({
   if (!open) return null;
 
   return (
-    <div style={styles.overlay}>
-      <div style={styles.modal}>
+    <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
+      <div className="bg-white p-6 rounded-xl w-[420px]">
         
-        <h2>Disponibilidad insuficiente</h2>
+        <h2 className="text-xl font-semibold mb-2">Disponibilidad insuficiente</h2>
 
-        <p>Algunos productos no tienen suficiente stock:</p>
+        <p className="mb-4">Algunos productos no tienen suficiente stock:</p>
 
-        <ul>
+        <ul className="list-disc list-inside space-y-1 mb-4">
           {issues.map(item => (
             <li key={item.id}>
               <strong>{item.title}</strong> — Pedidos: {item.requestedQty}, Disponibles: {item.availableQty}
@@ -40,22 +40,25 @@ const StockIssueModal: React.FC<StockIssueModalProps> = ({
           ))}
         </ul>
 
-        <div style={styles.actions}>
+        <div className="flex flex-col gap-2 mt-4">
           <button
-            style={{ ...styles.button, background: "#4caf50" }}
+            className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition"
             onClick={() => onAcceptAvailable(issues)}
           >
             Usar cantidades disponibles
           </button>
 
           <button
-            style={{ ...styles.button, background: "#f44336" }}
+            className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
             onClick={() => onDiscard(issues)}
           >
             Quitar productos
           </button>
 
-          <button style={styles.button} onClick={onClose}>
+          <button
+            className="px-4 py-2 rounded-lg bg-gray-300 text-gray-800 hover:bg-gray-400 transition"
+            onClick={onClose}
+          >
             Cancelar
           </button>
         </div>
@@ -63,36 +66,6 @@ const StockIssueModal: React.FC<StockIssueModalProps> = ({
       </div>
     </div>
   );
-};
-
-const styles = {
-  overlay: {
-    position: "fixed" as const,
-    inset: 0,
-    background: "rgba(0,0,0,0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modal: {
-    background: "white",
-    padding: "20px",
-    borderRadius: "12px",
-    width: "420px",
-  },
-  actions: {
-    marginTop: "20px",
-    display: "flex",
-    flexDirection: "column" as const,
-    gap: "10px",
-  },
-  button: {
-    padding: "10px",
-    borderRadius: "8px",
-    border: "none",
-    cursor: "pointer",
-    color: "white",
-  },
 };
 
 export default StockIssueModal;
