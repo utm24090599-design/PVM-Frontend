@@ -1,13 +1,22 @@
 // src/utils/mockOrders.ts
 
-import type { Order, OrderItem } from '../Components/types/orderTypes';
+import type { Order } from '../components/types/orderTypes';
 
 /** @type {Order[]} */
 export const mockOrders: Order[] = [
   {
     orderId: 'ORD-1001',
     clientName: 'Juan Pérez',
-    totalOrder: '$250.00',
+    totalOrder: 250.00,
+    status: 'PENDING',
+    token: null,
+    paymentStatus: 'PENDING',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    reservedUntil: null,
+    inventoryReserved: false,
+    paymentRequestCreated: false,
+    deliveryOrderCreated: false,
     items: [
       {
         id: 1,
@@ -19,6 +28,10 @@ export const mockOrders: Order[] = [
         collectedQuantity: 0,
         isCollected: false,
         requiresModification: false,
+        inventoryReserved: false,
+        confirmedAvailable: false,
+        unit: 'UNITS',
+        stockIssue: 'Solo hay 80 unidades disponibles de las 100 solicitadas',
       },
       {
         id: 2,
@@ -30,6 +43,9 @@ export const mockOrders: Order[] = [
         collectedQuantity: 0,
         isCollected: false,
         requiresModification: true, // Requiere verificación o corte
+        inventoryReserved: false,
+        confirmedAvailable: false,
+        unit: 'M',
       },
       {
         id: 3,
@@ -41,13 +57,25 @@ export const mockOrders: Order[] = [
         collectedQuantity: 0,
         isCollected: false,
         requiresModification: false,
+        inventoryReserved: false,
+        confirmedAvailable: false,
+        unit: 'UNITS',
       },
     ],
   },
   {
     orderId: 'ORD-1002',
     clientName: 'María García',
-    totalOrder: '$45.00',
+    totalOrder: 45.00,
+    status: 'PENDING',
+    token: null,
+    paymentStatus: 'PENDING',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    reservedUntil: null,
+    inventoryReserved: false,
+    paymentRequestCreated: false,
+    deliveryOrderCreated: false,
     items: [
       {
         id: 4,
@@ -59,6 +87,9 @@ export const mockOrders: Order[] = [
         collectedQuantity: 0,
         isCollected: false,
         requiresModification: false,
+        inventoryReserved: false,
+        confirmedAvailable: false,
+        unit: 'UNITS',
       },
     ],
   },

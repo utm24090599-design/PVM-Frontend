@@ -1,7 +1,7 @@
 // Dana: src/components/OrderItemRow.tsx
 
 import React, { useState } from 'react';
-import type { OrderItem } from '../Components/types/orderTypes'; 
+import type { OrderItem } from './types/orderTypes'; 
 
 interface OrderItemRowProps {
   item: OrderItem;

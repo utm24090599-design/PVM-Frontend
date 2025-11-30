@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useContext } from 'react' // ✨ Añadir useContext
-import Toasts from '../Components/toasts/Toast'
-import Modal from '../Components/modals/Modal'
+import Toasts from '../components/toasts/Toast'
+import Modal from '../components/modals/Modal'
 import '../styles/feedback.css'
 // import types + context from the new file
 import { FeedbackContext } from '../contexts/feedbackContext'

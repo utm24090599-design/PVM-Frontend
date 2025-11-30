@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { ProductData } from "../utils/mockData";
 import StockBadge from "../components/ui/StockBadge";
 import QuickActionMenu from "../components/inputs/QuickActionMenu";
@@ -12,6 +13,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ data, onClick }: ProductCardProps) {
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const { addToCart } = useCart();
   const [cartQuantity, setCartQuantity] = useState(0);
@@ -22,7 +24,12 @@ export default function ProductCard({ data, onClick }: ProductCardProps) {
 
   const handleCardClick = () => {
     if (isAvailable) {
-      onClick?.(data);
+      if (onClick) {
+        onClick(data);
+      } else {
+        // Navegar a la descripción del producto
+        navigate(`/app/itemDescription/${data.id}`);
+      }
     }
   };
 
@@ -47,14 +54,23 @@ export default function ProductCard({ data, onClick }: ProductCardProps) {
       onClick={handleCardClick}
     >
       {/* Botón de añadir al carrito */}
-      <div className="absolute top-2 right-2 z-10">
+      <div 
+        className="absolute top-2 right-2 z-10"
+        onClick={(e) => e.stopPropagation()} // Detener propagación del evento
+      >
         <AddToCartButton
           className={`cursor-${isAvailable ? "pointer" : "not-allowed"}`}
-          onAdd={() => addToCart({
-            ...data, quantity: cartQuantity,
-            name: ""
-          })}
-          disabled={!isAvailable}
+          onAdd={() => {
+            if (cartQuantity > 0) {
+              addToCart({
+                id: data.id,
+                name: data.title,
+                price: data.price,
+                quantity: cartQuantity
+              });
+            }
+          }}
+          disabled={!isAvailable || cartQuantity === 0}
         />
       </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 // Usamos 'import type' para importar solo las interfaces
 import type { OrderItem, Order } from "../components/types/orderTypes";
 // Importamos mockOrders que ahora viene del mismo archivo de tipos
@@ -18,11 +18,11 @@ export default function TestDashboard() {
   const [orders] = useState<Order[]>(mockOrders);
 
   // Aquí puedes agregar la lógica para encontrar la orden seleccionada (por si la necesitas)
-  const selectedOrder = selectedItem
-    ? orders.find((order) =>
-        order.items.some((item) => item.id === selectedItem.id)
-      ) // ✨ CORRECCIÓN: Usar item.id en lugar de item.sku
-    : null;
+  // const selectedOrder = selectedItem
+  //   ? orders.find((order) =>
+  //       order.items.some((item) => item.id === selectedItem.id)
+  //     ) // ✨ CORRECCIÓN: Usar item.id en lugar de item.sku
+  //   : null;
 
   const { role } = useAuth();
 

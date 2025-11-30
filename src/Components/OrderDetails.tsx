@@ -2,7 +2,7 @@ import React from 'react';
 // Importamos el hook que exportamos de FeedbackProvider
 import { useFeedback } from '../providers/FeedbackProvider'; 
 // Importamos el OrderItem global para mantener la consistencia (id: number, requestedQuantity)
-import type { OrderItem, Order } from '../Components/types/orderTypes'; 
+import type { OrderItem } from './types/orderTypes'; 
 import type { ToastType } from '../contexts/feedbackContext'; // Necesitamos ToastType para la aserción
 
 // Definición de Props: Item debe ser OrderItem o null

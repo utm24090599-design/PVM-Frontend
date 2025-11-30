@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { mockOrders } from '../utils/mockOrders';
 import OrderItemRow from './OrderItemRow';
-import type { Order, OrderItem } from '../Components/types/orderTypes'; // Asumimos que esta ruta es correcta
+import type { Order, OrderItem } from './types/orderTypes';
 
 // Definimos los props para OrderList
 interface OrderListProps {
@@ -59,17 +59,29 @@ const OrderList: React.FC<OrderListProps> = ({ onItemSelected, selectedItem }) =
           
           {/* Encabezado de la Orden */}
           <div className={`flex justify-between items-center p-3 text-white 
-              ${order.status === 'COMPLETED' ? 'bg-green-600' : 'bg-blue-600'}`}>
+              ${order.status === 'DELIVERED' ? 'bg-green-600' : 
+                order.status === 'PAID' ? 'bg-purple-600' :
+                order.status === 'READY_FOR_PAYMENT' ? 'bg-yellow-600' :
+                order.status === 'CANCELED' ? 'bg-red-600' : 'bg-blue-600'}`}>
             <div>
               <p className="font-bold text-lg">Orden ID: {order.orderId}</p>
               <p className="text-sm">Cliente: {order.clientName}</p>
+              {order.token && (
+                <p className="text-xs mt-1">Token: {order.token}</p>
+              )}
             </div>
             <div className="text-right">
-              {/* Nota: totalOrder es un string en tu tipo, lo usaremos directamente */}
-              <p className="font-extrabold text-2xl">${order.totalOrder}</p> 
+              <p className="font-extrabold text-2xl">${order.totalOrder.toFixed(2)}</p> 
               <span className="text-xs font-semibold">
-                {/* Asumimos que Order tiene la prop status */}
-                {order.status === 'COMPLETED' ? 'COMPLETADA' : 'EN PROCESO'} 
+                {order.status === 'PENDING' ? 'PENDIENTE' :
+                 order.status === 'IN_PROGRESS' ? 'EN PROCESO' :
+                 order.status === 'READY_FOR_PAYMENT' ? 'LISTA PARA PAGO' :
+                 order.status === 'PAYMENT_PENDING' ? 'PAGO PENDIENTE' :
+                 order.status === 'PAYMENT_RESERVED' ? 'RESERVADA' :
+                 order.status === 'PAID' ? 'PAGADA' :
+                 order.status === 'READY_FOR_DELIVERY' ? 'LISTA PARA ENTREGA' :
+                 order.status === 'DELIVERED' ? 'ENTREGADA' :
+                 order.status === 'CANCELED' ? 'CANCELADA' : order.status}
               </span>
             </div>
           </div>

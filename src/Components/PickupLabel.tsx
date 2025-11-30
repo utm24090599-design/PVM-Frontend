@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import QRCode from "react-qr-code";
-import { Card, CardContent } from "@/components/ui/card";
 
+interface PaymentLabelProps {
+  total: number;
+  paymentId: string;
+  codeType?: "qr" | "barcode";
+  codeValue: string;
+}
 
-// Props:
-// total: number
-// paymentId: string
-// codeType: "qr" | "barcode"
-// codeValue: string (the encoded value)
-
-export default function PaymentLabel({ total, paymentId, codeType = "qr", codeValue }) {
+export default function PaymentLabel({ total, paymentId, codeType = "qr", codeValue }: PaymentLabelProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -19,10 +18,9 @@ export default function PaymentLabel({ total, paymentId, codeType = "qr", codeVa
   };
 
   return (
-    <div className="w-full max-w-sm mx-auto"
-    >
-      <Card className="p-4 rounded-2xl shadow-md">
-        <CardContent className="flex flex-col items-center gap-4">
+    <div className="w-full max-w-sm mx-auto">
+      <div className="p-4 rounded-2xl shadow-md bg-white">
+        <div className="flex flex-col items-center gap-4">
           <h2 className="text-xl font-semibold text-center">Pago del Pedido</h2>
 
           {codeType === "qr" ? (
@@ -54,8 +52,8 @@ export default function PaymentLabel({ total, paymentId, codeType = "qr", codeVa
               {copied ? "Copiado!" : "Copiar ID"}
             </button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

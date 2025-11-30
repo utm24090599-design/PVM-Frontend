@@ -1,38 +1,69 @@
 /**
- * Define los estados posibles de una Orden.
+ * Define los estados posibles de una Orden según el flujo del PVM.
  */
-export type OrderStatus = 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELED';
+export type OrderStatus = 
+  | 'PENDING'           // Paso 1: Orden creada, esperando recogida
+  | 'IN_PROGRESS'       // Paso 2: En proceso de recogida
+  | 'READY_FOR_PAYMENT' // Paso 2 completado: Lista para pago, token asignado
+  | 'PAYMENT_PENDING'   // Paso 3: Esperando pago
+  | 'PAYMENT_RESERVED'  // Paso 3: Reservado por tiempo limitado
+  | 'PAID'              // Paso 3: Pagado, listo para entrega
+  | 'READY_FOR_DELIVERY'// Paso 4: Listo para entrega
+  | 'DELIVERED'         // Paso 4: Entregado
+  | 'CANCELED';         // Cancelada
+
+/**
+ * Estados de pago
+ */
+export type PaymentStatus = 
+  | 'PENDING'    // Pendiente de pago
+  | 'RESERVED'   // Reservado por tiempo limitado
+  | 'PAID'       // Pagado
+  | 'CANCELED';  // Cancelado
+
+/**
+ * Unidades de medida para inventario
+ */
+export type InventoryUnit = 'UNITS' | 'KG' | 'M';
 
 /**
  * Define la estructura de un artículo dentro de una orden de recogida.
  * Se usará 'id' como identificador numérico único (en lugar del 'sku' que no existe).
  */
 export interface OrderItem {
-  id: number;
-  cartTitle: string;
-  cartProductDescription: string;
-  price: number;
-  requestedQuantity: number; // Cantidad solicitada (es la que se usa para la lógica de escasez)
-  availableStock: number; 
+  id: number; // ID único del producto
+  cartTitle: string; // Nombre del producto
+  cartProductDescription: string; // Descripción del producto
+  price: number; // Precio unitario
+  requestedQuantity: number; // Cantidad solicitada por el cliente
+  availableStock: number; // Stock disponible en inventario
   collectedQuantity: number; // Cantidad que el empleado ha marcado como recogida
   isCollected: boolean; // Estado de recogida
   requiresModification: boolean; // Indica si el producto requiere ajuste (ej. rollo de material)
-  // Nota: Si usas 'sku' en otros archivos, deberías agregarlo aquí también, 
-  // pero usaremos 'id' por ahora para resolver los errores previos.
+  inventoryReserved: boolean; // Indica si el inventario está reservado para este ítem
+  confirmedAvailable: boolean; // Confirmado por Inventory Manager
+  unit: InventoryUnit; // Unidad de medida (UNITS, KG, M)
+  stockIssue?: string; // Problema reportado con el stock (si hay escasez)
 }
 
 /**
- * Define la estructura de una orden de recogida.
- * ✨ CORRECCIÓN: Se añade 'status: OrderStatus' para resolver el error.
- * ✨ CORRECCIÓN: Se añade 'totalOrder: number' para que puedas formatearlo a string (toFixed(2)).
- * (Tu código anterior manejaba totalOrder como string, pero para cálculos y toFixed es mejor que sea number).
+ * Define la estructura de una orden de recogida según el PVM.
+ * Incluye todos los campos necesarios para el flujo completo de 4 pasos.
  */
 export interface Order {
-  orderId: string; // Se mantiene como string (ej. "ORD-001")
-  clientName: string;
-  totalOrder: number; // Cambiado a number para cálculos y formateo
-  items: OrderItem[];
-  status: OrderStatus; // Nuevo campo requerido por tu código en OrderList.tsx
+  orderId: string; // ID único de la orden (ej. "ORD-001")
+  clientName: string; // Nombre del cliente
+  totalOrder: number; // Total de la orden en número para cálculos
+  items: OrderItem[]; // Lista de artículos de la orden
+  status: OrderStatus; // Estado actual de la orden en el flujo
+  token?: string | null; // Token físico asignado (número de tarjeta física)
+  paymentStatus?: PaymentStatus; // Estado del pago
+  createdAt: string; // Fecha de creación de la orden
+  updatedAt: string; // Fecha de última actualización
+  reservedUntil?: string | null; // Fecha hasta cuando está reservada (si aplica)
+  inventoryReserved: boolean; // Indica si el inventario está reservado
+  paymentRequestCreated: boolean; // Indica si se creó la solicitud de pago
+  deliveryOrderCreated: boolean; // Indica si se creó la orden de entrega
 }
 
 
@@ -43,7 +74,15 @@ export const mockOrders: Order[] = [
     orderId: "ORD-001",
     clientName: "Ana Gómez",
     totalOrder: 155.50,
-    status: 'IN_PROGRESS',
+    status: 'PENDING',
+    token: null,
+    paymentStatus: 'PENDING',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    reservedUntil: null,
+    inventoryReserved: false,
+    paymentRequestCreated: false,
+    deliveryOrderCreated: false,
     items: [
       {
         id: 101,
@@ -55,6 +94,9 @@ export const mockOrders: Order[] = [
         collectedQuantity: 0,
         isCollected: false,
         requiresModification: false,
+        inventoryReserved: false,
+        confirmedAvailable: false,
+        unit: 'UNITS',
       },
       {
         id: 102,
@@ -66,6 +108,10 @@ export const mockOrders: Order[] = [
         collectedQuantity: 0,
         isCollected: false,
         requiresModification: false,
+        inventoryReserved: false,
+        confirmedAvailable: false,
+        unit: 'UNITS',
+        stockIssue: 'Producto no disponible en inventario',
       },
       {
         id: 103,
@@ -77,6 +123,9 @@ export const mockOrders: Order[] = [
         collectedQuantity: 0,
         isCollected: false,
         requiresModification: true,
+        inventoryReserved: false,
+        confirmedAvailable: false,
+        unit: 'M',
       },
     ],
   },
@@ -84,7 +133,15 @@ export const mockOrders: Order[] = [
     orderId: "ORD-002",
     clientName: "Roberto Fernández",
     totalOrder: 88.00,
-    status: 'COMPLETED',
+    status: 'PENDING',
+    token: null,
+    paymentStatus: 'PENDING',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    reservedUntil: null,
+    inventoryReserved: false,
+    paymentRequestCreated: false,
+    deliveryOrderCreated: false,
     items: [
       {
         id: 201,
@@ -93,9 +150,12 @@ export const mockOrders: Order[] = [
         price: 88.00,
         requestedQuantity: 1,
         availableStock: 1,
-        collectedQuantity: 1,
-        isCollected: true,
+        collectedQuantity: 0,
+        isCollected: false,
         requiresModification: false,
+        inventoryReserved: false,
+        confirmedAvailable: false,
+        unit: 'UNITS',
       },
     ],
   },
