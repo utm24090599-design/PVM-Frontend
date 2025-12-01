@@ -160,3 +160,4 @@ async function fakeReserve(productId: string, qty: number) {
 function showToast({ type, message }: { type: string; message: string }) {
   console.log(`[${type}] ${message}`);
 }
+
