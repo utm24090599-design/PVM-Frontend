@@ -6,7 +6,7 @@ import Form from "../pages/form";
 import MainLayout from "../layouts/MainLayout";
 import ItemDescription from "../pages/ItemDescription";
 import Principal from "../pages/PrincipalInterface";
-import RoleBasedDashboard from "../components/RoleBasedDashboard";
+import RoleBasedDashboard from "../Components/RoleBasedDashboard";
 import ReceptionistPage from "../pages/ReceptionistPage";
 import InventoryManagerPage from "../pages/InventoryManagerPage";
 import SaleAreaPage from "../pages/SaleAreaPage";
