@@ -7,11 +7,25 @@ import type { Order, OrderItem } from './types/orderTypes';
 interface OrderListProps {
   onItemSelected: (item: OrderItem | null) => void;
   selectedItem: OrderItem | null;
+  orders?: Order[]; // Órdenes desde props (backend)
+  onOrdersUpdate?: (orders: Order[]) => void; // Callback para actualizar órdenes
 }
 
-const OrderList: React.FC<OrderListProps> = ({ onItemSelected, selectedItem }) => {
-  // Estado para la data de las órdenes (será el estado que se actualice)
-  const [orders, setOrders] = useState<Order[]>(mockOrders);
+const OrderList: React.FC<OrderListProps> = ({ 
+  onItemSelected, 
+  selectedItem,
+  orders: ordersProp,
+  onOrdersUpdate
+}) => {
+  // Estado para la data de las órdenes (usar props si están disponibles, sino mock)
+  const [orders, setOrders] = useState<Order[]>(ordersProp || mockOrders);
+
+  // Actualizar cuando cambien las props
+  useEffect(() => {
+    if (ordersProp) {
+      setOrders(ordersProp);
+    }
+  }, [ordersProp]);
 
   // Efecto para seleccionar automáticamente el primer artículo de la primera orden al cargar
   useEffect(() => {
@@ -22,26 +36,31 @@ const OrderList: React.FC<OrderListProps> = ({ onItemSelected, selectedItem }) =
 
   // ✨ CORRECCIÓN 1: La función de actualización debe usar 'id: number' según orderTypes.ts.
   const handleItemUpdate = (itemId: number, updates: Partial<OrderItem>) => {
-    setOrders(prevOrders => 
-      prevOrders.map(order => ({
-        ...order,
-        items: order.items.map(item => {
-          // 🛑 CORRECCIÓN 2: Usar item.id en lugar de item.sku para la comparación.
-          if (item.id === itemId) {
-            
-            const updatedItem = { ...item, ...updates };
-            
-            // Si el ítem seleccionado es el que se actualizó, también actualizamos el estado de la derecha
-            // 🛑 CORRECCIÓN 3: Usar selectedItem.id para la comparación.
-            if (selectedItem && selectedItem.id === itemId) {
-                onItemSelected(updatedItem);
-            }
-            return updatedItem;
+    const updatedOrders = orders.map(order => ({
+      ...order,
+      items: order.items.map(item => {
+        // 🛑 CORRECCIÓN 2: Usar item.id en lugar de item.sku para la comparación.
+        if (item.id === itemId) {
+          
+          const updatedItem = { ...item, ...updates };
+          
+          // Si el ítem seleccionado es el que se actualizó, también actualizamos el estado de la derecha
+          // 🛑 CORRECCIÓN 3: Usar selectedItem.id para la comparación.
+          if (selectedItem && selectedItem.id === itemId) {
+              onItemSelected(updatedItem);
           }
-          return item;
-        }),
-      }))
-    );
+          return updatedItem;
+        }
+        return item;
+      }),
+    }));
+    
+    setOrders(updatedOrders);
+    
+    // Notificar al componente padre si hay callback
+    if (onOrdersUpdate) {
+      onOrdersUpdate(updatedOrders);
+    }
   };
   
   // Manejador de clic de fila para seleccionar el artículo

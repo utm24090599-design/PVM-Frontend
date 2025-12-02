@@ -2,12 +2,16 @@
  * Página del Carrito de Compras
  * Muestra los productos agregados y permite modificar cantidades
  */
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../auth/UseAuth";
 import { mockProducts } from "../utils/mockData";
 import type { CartItem } from "../types/cart";
 import type { ProductData } from "../utils/mockData";
+import PayButton from "../components/ui/PayButton";
+import StockIssueModal, { type StockIssueItem } from "../components/modals/StockIssueModal";
+// import { useInventoryReservation } from "../hooks/useInventoryReservation";
 
 interface CartItemWithProduct extends CartItem {
   product?: ProductData;
@@ -17,6 +21,10 @@ export default function CartPage() {
   const navigate = useNavigate();
   const { cart, updateQuantity, removeFromCart } = useCart();
   const { role, logout } = useAuth();
+  const [stockIssues, setStockIssues] = useState<StockIssueItem[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCheckingStock, setIsCheckingStock] = useState(false);
+  // const { checkAvailability } = useInventoryReservation();
 
   // Enriquecer los items del carrito con información del producto
   const cartItemsWithProducts: CartItemWithProduct[] = cart.map(item => {
@@ -64,6 +72,80 @@ export default function CartPage() {
     } else {
       removeFromCart(item.id);
     }
+  };
+
+  // Función para verificar el stock de todos los productos antes de proceder al pago
+  const handleProceedToPayment = async () => {
+    setIsCheckingStock(true);
+    const issues: StockIssueItem[] = [];
+
+    try {
+      // Verificar stock de cada producto en el carrito usando el backend
+      for (const item of cartItemsWithProducts) {
+        try {
+          const { checkCartStock } = await import('../services/orderService');
+          const stockCheck = await checkCartStock([item]);
+          const check = stockCheck[0];
+          
+          if (check.hasIssue) {
+            issues.push({
+              id: item.id,
+              title: item.product?.title || item.name || `Producto #${item.id}`,
+              requestedQty: item.quantity,
+              availableQty: check.available,
+            });
+          }
+        } catch (err) {
+          // Si falla la verificación, marcar como problema
+          issues.push({
+            id: item.id,
+            title: item.product?.title || item.name || `Producto #${item.id}`,
+            requestedQty: item.quantity,
+            availableQty: 0,
+          });
+        }
+      }
+
+      // Si hay problemas de stock, mostrar el modal
+      if (issues.length > 0) {
+        setStockIssues(issues);
+        setIsModalOpen(true);
+        setIsCheckingStock(false);
+        return;
+      }
+
+      // Si todo está bien, proceder al pago
+      navigate("/app/payItems");
+    } catch (err) {
+      console.error('Error checking stock:', err);
+      alert('Error al verificar el stock. Intenta nuevamente.');
+    } finally {
+      setIsCheckingStock(false);
+    }
+  };
+
+  // Manejar cuando el usuario acepta usar las cantidades disponibles
+  const handleAcceptAvailable = (items: StockIssueItem[]) => {
+    items.forEach((issue) => {
+      if (issue.availableQty > 0) {
+        // Ajustar la cantidad al stock disponible
+        updateQuantity(issue.id, issue.availableQty);
+      } else {
+        // Si no hay stock, eliminar el producto
+        removeFromCart(issue.id);
+      }
+    });
+    setIsModalOpen(false);
+    setStockIssues([]);
+  };
+
+  // Manejar cuando el usuario decide quitar los productos sin stock
+  const handleDiscard = (items: StockIssueItem[]) => {
+    items.forEach((issue) => {
+      removeFromCart(issue.id);
+    });
+    setIsModalOpen(false);
+    setStockIssues([]);
   };
 
   if (cart.length === 0) {
@@ -217,12 +299,13 @@ export default function CartPage() {
                 </div>
               </div>
 
-              <button
-                onClick={() => navigate("/app/payItems")}
-                className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold text-lg mb-4"
+              <PayButton 
+                onClick={handleProceedToPayment}
+                isPayButtonDisabled={isCheckingStock || cart.length === 0}
+                className="w-full"
               >
-                Proceder al Pago
-              </button>
+                {isCheckingStock ? "Verificando\nstock..." : "Pagar"}
+              </PayButton>
 
               <button
                 onClick={() => navigate("/app/catalog")}
@@ -234,6 +317,15 @@ export default function CartPage() {
           </div>
         </div>
       </div>
+
+      {/* Modal de problemas de stock */}
+      <StockIssueModal
+        open={isModalOpen}
+        issues={stockIssues}
+        onClose={() => setIsModalOpen(false)}
+        onAcceptAvailable={handleAcceptAvailable}
+        onDiscard={handleDiscard}
+      />
     </div>
   );
 }

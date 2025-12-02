@@ -39,7 +39,7 @@ export default function PaymentLabel({ total, paymentId, codeType = "qr", codeVa
 
           <div className="text-center">
             <p className="text-lg font-medium">Total a pagar:</p>
-            <p className="text-2xl font-bold">${total}</p>
+            <p className="text-2xl font-bold">${total.toFixed(2)}</p>
           </div>
 
           <div className="w-full text-center">

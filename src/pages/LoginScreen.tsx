@@ -12,29 +12,51 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     setError(null);
 
-    // Autenticar usuario localmente
-    const user = authenticateUser(email, password);
-    
-    if (!user) {
-      setError("Email o contraseña incorrectos");
-      return;
-    }
+    try {
+      // Intentar autenticar con el backend primero
+      const { authApi } = await import('../services/api');
+      const response = await authApi.login({ email, password });
+      
+      // Guardar token y datos del usuario
+      login(response.token, response.user.role);
+      setCurrentUser({
+        id: response.user.id,
+        nombre: response.user.name,
+        email: response.user.email,
+        password: '', // No guardar password
+        role: response.user.role as any,
+        createdAt: new Date().toISOString(),
+      });
 
-    // Guardar usuario en sesión
-    setCurrentUser(user);
+      // Redirigir según el rol
+      if (response.user.role === 'CLIENT') {
+        navigate("/app/catalog");
+      } else {
+        navigate("/app/dashboard");
+      }
+    } catch (err: any) {
+      // Si falla el backend, intentar con usuarios locales (fallback)
+      const user = authenticateUser(email, password);
+      
+      if (!user) {
+        setError(err.response?.data?.message || "Email o contraseña incorrectos");
+        return;
+      }
 
-    // Iniciar sesión en el contexto de autenticación
-    login(`token-${user.id}`, user.role);
+      // Guardar usuario en sesión
+      setCurrentUser(user);
+      login(`token-${user.id}`, user.role);
 
-    // Redirigir según el rol
-    if (user.role === 'CLIENT') {
-      navigate("/app/catalog");
-    } else {
-      navigate("/app/dashboard");
+      // Redirigir según el rol
+      if (user.role === 'CLIENT') {
+        navigate("/app/catalog");
+      } else {
+        navigate("/app/dashboard");
+      }
     }
   };
   //Formulario

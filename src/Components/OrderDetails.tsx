@@ -8,9 +8,11 @@ import type { ToastType } from '../contexts/feedbackContext'; // Necesitamos Toa
 // Definición de Props: Item debe ser OrderItem o null
 interface OrderDetailsProps {
   item: OrderItem | null;
+  orderId?: string; // ID de la orden para confirmar items
+  onItemConfirmed?: (itemId: number, availableQuantity: number) => Promise<void>; // Callback para confirmar item
 }
 
-const OrderDetails: React.FC<OrderDetailsProps> = ({ item }) => {
+const OrderDetails: React.FC<OrderDetailsProps> = ({ item, orderId, onItemConfirmed }) => {
   // Hook para usar los modales de confirmación y toasts
   const { showConfirm, showToast } = useFeedback();
 
@@ -64,8 +66,31 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ item }) => {
     showToast({ type: 'info', message: `Generando etiqueta para el artículo: ${item.cartTitle}` });
   };
   
-  const handleConfirmItem = () => {
-    showToast({ type: 'success', message: `Artículo '${item.cartTitle}' marcado como CONFIRMADO (simulación).` });
+  const handleConfirmItem = async () => {
+    if (!item || !orderId) {
+      showToast({ type: 'error', message: 'No se puede confirmar: falta información de la orden.' });
+      return;
+    }
+
+    showConfirm({
+      title: 'Confirmar Disponibilidad',
+      message: `¿Confirmar que hay ${item.availableStock} unidades disponibles de '${item.cartTitle}'?`,
+      icon: 'check_circle' as any,
+      confirmText: 'Sí, Confirmar',
+      onConfirm: async () => {
+        try {
+          if (onItemConfirmed) {
+            await onItemConfirmed(item.id, item.availableStock);
+            showToast({ type: 'success', message: `Artículo '${item.cartTitle}' confirmado exitosamente.` });
+          } else {
+            showToast({ type: 'success', message: `Artículo '${item.cartTitle}' marcado como CONFIRMADO.` });
+          }
+        } catch (error: any) {
+          showToast({ type: 'error', message: error.message || 'Error al confirmar el artículo.' });
+        }
+      },
+      onCancel: () => showToast({ type: 'info', message: 'Confirmación cancelada.' }),
+    });
   };
 
 

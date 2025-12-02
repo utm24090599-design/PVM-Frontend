@@ -18,7 +18,7 @@ export default function RoleBasedDashboard() {
     return (
       <div className="p-6">
         <p>No hay rol asignado. Por favor, inicia sesión.</p>
-        <button onClick={() => navigate("/login")} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded">
+        <button onClick={() => navigate("/login")} className="px-4 py-2 bg-green-400 text-white rounded-lg hover:bg-green-500 transition">
           Ir al Login
         </button>
       </div>

@@ -19,7 +19,7 @@ export default function Form() {
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setMensaje("");
@@ -31,19 +31,35 @@ export default function Form() {
     }
 
     try {
-      // Crear usuario localmente
-      createUser(formData.nombre, formData.usuario, formData.password, 'CLIENT');
+      // Intentar registrar en el backend primero
+      const { authApi } = await import('../services/api');
+      await authApi.register({
+        nombre: formData.nombre,
+        email: formData.usuario,
+        password: formData.password,
+      });
+      
       setMensaje("Usuario registrado exitosamente. Redirigiendo al login...");
       
       // Redirigir al login después de 1.5 segundos
       setTimeout(() => {
         navigate("/login");
       }, 1500);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Error al registrar usuario");
+    } catch (err: any) {
+      // Si falla el backend, intentar crear usuario localmente (fallback)
+      try {
+        createUser(formData.nombre, formData.usuario, formData.password, 'CLIENT');
+        setMensaje("Usuario registrado exitosamente. Redirigiendo al login...");
+        
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+      } catch (localErr) {
+        if (localErr instanceof Error) {
+          setError(localErr.message);
+        } else {
+          setError(err.response?.data?.message || "Error al registrar usuario");
+        }
       }
     }
   };

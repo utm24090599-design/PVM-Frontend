@@ -72,11 +72,11 @@ const QuickActionMenu: React.FC<QuickActionMenuProps> = ({
       <div className="flex items-center space-x-2 z-10">
         {/* PAYBUTTON CON VALIDACIÓN Y DETENCIÓN DE PROPAGACIÓN */}
         <PayButton
-          OnClick={(e) => {
+          onClick={(e) => {
             stopPropagation(e);
             navigate("/app/payItems");
           }}
-          IsPayButtonDisabled={isPayButtonDisabled}
+          isPayButtonDisabled={isPayButtonDisabled}
         />
 
         {/* Contador de Cantidad (Con Detención de Propagación) */}

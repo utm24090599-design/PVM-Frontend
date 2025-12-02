@@ -27,14 +27,29 @@ export function useInventoryReservation() {
   // ============================================================
   // 1. Verificar inventario (inicio del flujo del diagrama)
   // ============================================================
-  async function checkAvailability(productId: string, quantity: number) {
+  async function checkAvailability(
+    productId: string | number, 
+    quantity: number,
+    availableStock?: number
+  ) {
     setStatus("checking");
 
     try {
-      const resp: InventoryCheckResponse = await fakeInventoryCheck(
-        productId,
-        quantity
-      );
+      let resp: InventoryCheckResponse;
+      
+      // Intentar usar el backend primero
+      try {
+        const { productsApi } = await import('../services/api');
+        resp = await productsApi.checkStock(Number(productId), quantity);
+      } catch (backendError) {
+        // Fallback a mock si el backend falla
+        console.warn('Backend unavailable, using mock:', backendError);
+        resp = await fakeInventoryCheck(
+          productId,
+          quantity,
+          availableStock
+        );
+      }
 
       // Caso 1 → disponibilidad completa
       if (resp.available >= quantity) {
@@ -135,11 +150,25 @@ export function useInventoryReservation() {
 =================================================================== */
 
 async function fakeInventoryCheck(
-  productId: string,
-  qty: number
+  _productId: number | string,
+  qty: number,
+  availableStock?: number
 ): Promise<InventoryCheckResponse> {
   return new Promise((resolve) => {
     setTimeout(() => {
+      // Si se proporciona el stock disponible, usarlo
+      if (availableStock !== undefined) {
+        if (qty <= availableStock) {
+          resolve({ available: qty, partial: false, maxPartial: qty });
+        } else if (availableStock > 0) {
+          resolve({ available: availableStock, partial: true, maxPartial: availableStock });
+        } else {
+          resolve({ available: 0, partial: false, maxPartial: 0 });
+        }
+        return;
+      }
+
+      // Lógica mock original
       if (qty <= 10)
         resolve({ available: qty, partial: false, maxPartial: qty });
 

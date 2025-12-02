@@ -6,7 +6,6 @@ import { useAuth } from "../auth/UseAuth";
 const MainLayout: React.FC = () => {
   const params = useLocation();
   const { role, logout } = useAuth();
-  console.log(role);
 
   return (
     <div className="main-layout grid relative grid-rows-[100px_auto_100px] overflow-x-hidden">
