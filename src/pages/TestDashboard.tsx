@@ -1,12 +1,12 @@
 import { useState } from "react";
 // Usamos 'import type' para importar solo las interfaces
-import type { OrderItem, Order } from "../components/types/orderTypes";
+import type { OrderItem, Order } from "../Components/types/orderTypes";
 // Importamos mockOrders que ahora viene del mismo archivo de tipos
-import { mockOrders } from "../components/types/orderTypes";
+import { mockOrders } from "../Components/types/orderTypes";
 
 // Importamos OrderList y OrderDetails del directorio 'components'
-import OrderList from "../components/OrderList";
-import OrderDetails from "../components/OrderDetails"; // ¡Ruta de importación corregida!
+import OrderList from "../Components/OrderList";
+import OrderDetails from "../Components/OrderDetails"; // ¡Ruta de importación corregida!
 import { useAuth } from "../auth/UseAuth";
 // import GridCatalogue from "../catalogue/ProductGrid";
 // import OrderSection from '../components/OrderSection';

@@ -2,8 +2,8 @@
  * Define los estados posibles de una Orden según el flujo del PVM.
  */
 export type OrderStatus = 
-  | 'PENDING'           // Paso 1: Orden creada, esperando recogida
-  | 'IN_PROGRESS'       // Paso 2: En proceso de recogida
+  | 'PENDING'       // Paso 1: Orden creada, esperando recogida
+  | 'IN_PROGRESS'   // Paso 2: En proceso de recogida
   | 'READY_FOR_PAYMENT' // Paso 2 completado: Lista para pago, token asignado
   | 'PAYMENT_PENDING'   // Paso 3: Esperando pago
   | 'PAYMENT_RESERVED'  // Paso 3: Reservado por tiempo limitado
@@ -19,7 +19,7 @@ export type PaymentStatus =
   | 'PENDING'    // Pendiente de pago
   | 'RESERVED'   // Reservado por tiempo limitado
   | 'PAID'       // Pagado
-  | 'CANCELED';  // Cancelado
+  | 'CANCELED';   // Cancelado
 
 /**
  * Unidades de medida para inventario
@@ -44,6 +44,8 @@ export interface OrderItem {
   confirmedAvailable: boolean; // Confirmado por Inventory Manager
   unit: InventoryUnit; // Unidad de medida (UNITS, KG, M)
   stockIssue?: string; // Problema reportado con el stock (si hay escasez)
+  // Puedes añadir este flag si quieres un control explícito:
+  // isCutRegistered?: boolean; 
 }
 
 /**
@@ -66,6 +68,18 @@ export interface Order {
   deliveryOrderCreated: boolean; // Indica si se creó la orden de entrega
 }
 
+// -------------------------------------------------------------
+// ✨ NUEVO TIPO PARA LA ACTIVIDAD DE CORTE PARCIAL
+// -------------------------------------------------------------
+
+/**
+ * Define la estructura de datos que se enviará al Backend para registrar un corte parcial.
+ */
+export interface PartialCutData {
+  itemId: number;
+  deliveredQuantity: number; // Cantidad final entregada al cliente (el corte)
+  leftoverQuantity: number; // Cantidad sobrante que vuelve al inventario
+}
 
 // --- Datos de Prueba (MOCK) ---
 // ✨ Se define la estructura de datos simulados (mockOrders) para que OrderList pueda importarlos.
@@ -120,7 +134,8 @@ export const mockOrders: Order[] = [
         price: 95.00,
         requestedQuantity: 1,
         availableStock: 1,
-        collectedQuantity: 0,
+        // Asumiendo que se recogió todo el rollo inicial (10 metros)
+        collectedQuantity: 10, 
         isCollected: false,
         requiresModification: true,
         inventoryReserved: false,
