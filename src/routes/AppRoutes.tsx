@@ -6,17 +6,18 @@ import Form from "../pages/form";
 import MainLayout from "../layouts/MainLayout";
 import ItemDescription from "../pages/ItemDescription";
 import Principal from "../pages/PrincipalInterface";
-import RoleBasedDashboard from "../components/RoleBasedDashboard";
+import RoleBasedDashboard from "../Components/RoleBasedDashboard";
 import ReceptionistPage from "../pages/ReceptionistPage";
 import InventoryManagerPage from "../pages/InventoryManagerPage";
 import SaleAreaPage from "../pages/SaleAreaPage";
 import DeliveryAreaPage from "../pages/DeliveryAreaPage";
 import CatalogPage from "../pages/CatalogPage";
 import CartPage from "../pages/CartPage";
-
+import DeliveryView from "../pages/DeliveryView";
 export default function AppRouter() {
   return (
     <Routes>
+      <Route path="/ok" element={<DeliveryView />} />
       <Route path="/login" element={<LoginForm />} />
       <Route path="/test-login" element={<TestLogin />} />
       <Route path="/register" element={<Form />} />
@@ -32,6 +33,7 @@ export default function AppRouter() {
         <Route path="delivery" element={<DeliveryAreaPage />} />
         <Route path="itemDescription/:id" element={<ItemDescription />} />
         <Route path="payItems" element={<Principal />} />
+        
         <Route path="old-dashboard" element={<Dashboard />} />
         <Route index element={<Navigate to="dashboard" replace />} />
       </Route>
