@@ -6,6 +6,7 @@ import Form from "../pages/form";
 import GridCatalogue from "../catalogue/ProductGrid";
 import MainLayout from "../layouts/MainLayout";
 import StockIssueTest from "../Components/Sure/StockIssueModalPage";
+import OrderConfirmationPage from "../Components/Confirm/Confirm_p";
 
 export default function AppRouter() {
   return (
@@ -14,6 +15,7 @@ export default function AppRouter() {
       <Route path="/register" element={<Form />} />
       <Route path="/catalogue" element={<GridCatalogue />} />
       <Route path="/stcki" element={<StockIssueTest />} />
+      <Route path="/Corder" element={<OrderConfirmationPage/>} />
 
       <Route
         element={
